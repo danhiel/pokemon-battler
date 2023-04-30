@@ -2,8 +2,8 @@ import 'package:app/model/player_model.dart';
 import 'package:app/model/pokemon_model.dart';
 import 'package:flutter/widgets.dart';
 
-class PokedexViewModel extends ChangeNotifier {
-  final Player _player = Player();
+class GameViewModel extends ChangeNotifier {
+  final Player _player = Player('2', '1' as Map<int, Pokemon>, '2' as Pokemon);
 
   PokedexViewModel() {}
 
