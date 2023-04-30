@@ -1,13 +1,9 @@
+import 'package:app/widgets/pokedex.dart';
 import 'package:flutter/material.dart';
 
 import 'home.dart';
 
-const List<Widget> _widgetOptions = <Widget>[
-  Home(),
-  Text(
-    'Index 1: Pokedex',
-  ),
-];
+const List<Widget> _widgetOptions = <Widget>[Home(), Pokedex()];
 
 class App extends StatefulWidget {
   const App({super.key});

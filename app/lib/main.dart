@@ -17,9 +17,9 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           title: 'Pokemon Battler',
           theme: ThemeData(
-            primarySwatch: Colors.amber,
+            primarySwatch: Colors.red,
           ),
-          home: App(),
+          home: const App(),
         ));
   }
 }
