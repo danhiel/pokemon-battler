@@ -19,13 +19,13 @@ class _PokedexState extends State<Pokedex> {
             bottom: const TabBar(
               tabs: <Widget>[
                 Tab(
-                  icon: Icon(Icons.cloud_outlined),
+                  child: Text("All"),
                 ),
                 Tab(
-                  icon: Icon(Icons.beach_access_sharp),
+                  child: Text("Captured"),
                 ),
                 Tab(
-                  icon: Icon(Icons.brightness_5_sharp),
+                  child: Text("Wild"),
                 ),
               ],
             ),
@@ -33,13 +33,13 @@ class _PokedexState extends State<Pokedex> {
           body: const TabBarView(
             children: <Widget>[
               Center(
-                child: Text("It's cloudy here"),
+                child: Text("ListView of pokemons"),
               ),
               Center(
-                child: Text("It's rainy here"),
+                child: Text("ListView of uncaptured Pokemons"),
               ),
               Center(
-                child: Text("It's sunny here"),
+                child: Text("ListView of captured"),
               ),
             ],
           ),
