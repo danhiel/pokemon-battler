@@ -5,7 +5,7 @@ class Pokemon {
   final String _name;
   final String _type;
   final String _img;
-  final bool _isCaptured;
+  bool _isCaptured;
   final int _maxHp;
   final List<Move> _moves;
   int _currentHp;
@@ -28,6 +28,10 @@ class Pokemon {
   int get maxHp => _maxHp;
 
   int get currentHp => _currentHp;
+
+  set isCaptured(bool isCaptured) {
+    _isCaptured = isCaptured;
+  }
 
   set currentHp(int currentHp) {
     _currentHp = currentHp;
