@@ -1,17 +1,19 @@
+import 'package:app/model/pokemon_model.dart';
+
 class Player {
   final String _id;
-  final String _pokedex;
-  String _selectedPokemon;
+  final Map<int, Pokemon> _pokedex;
+  Pokemon _selectedPokemon;
 
   Player(this._id, this._pokedex, this._selectedPokemon);
 
-  String get id => this._id;
+  String get id => _id;
 
-  String get pokedex => this._pokedex;
+  Map<int, Pokemon> get pokedex => _pokedex;
 
-  String get selectedPokemon => this._selectedPokemon;
+  Pokemon get selectedPokemon => _selectedPokemon;
 
-  set selectedPokemon(String selectedPokemon) {
+  set selectedPokemon(Pokemon selectedPokemon) {
     _selectedPokemon = selectedPokemon;
   }
 }
