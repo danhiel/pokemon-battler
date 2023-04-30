@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
+import 'home.dart';
+
 const List<Widget> _widgetOptions = <Widget>[
-  Text(
-    'Index 0: Battle',
-  ),
+  Home(),
   Text(
     'Index 1: Pokedex',
   ),
 ];
 
 class App extends StatefulWidget {
+  const App({super.key});
+
   @override
   State<App> createState() => _AppState();
 }
