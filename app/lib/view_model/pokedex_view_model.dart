@@ -1,36 +1,30 @@
-import 'package:app/model/player_model.dart';
 import 'package:app/model/pokemon_model.dart';
+import 'package:app/repos/pokemon_repository.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get_it/get_it.dart';
 
-class GameViewModel extends ChangeNotifier {
-  final Player _player = Player('2', '1' as Map<int, Pokemon>, '2' as Pokemon);
+class PokedexViewModel extends ChangeNotifier {
+  late PokemonRepository _pokemonRepo;
+  List<Pokemon> _pokedex = [];
 
-  PokedexViewModel() {}
-
-  void capturePokemon(int index) {
-    if (_player.pokedex.containsKey(index)) {
-      _player.pokedex[index]?.isCaptured = true;
-    }
-    notifyListeners();
+  PokedexViewModel() {
+    _pokemonRepo = GetIt.instance.get<PokemonRepository>();
+    watchPokedex();
   }
 
-  void releasePokemon(int index) {
-    if (_player.pokedex.containsKey(index)) {
-      _player.pokedex[index]?.isCaptured = false;
-    }
-    notifyListeners();
+  void watchPokedex() {
+    _pokemonRepo.watchAllPokemons().listen((pokemons) {
+      _pokedex = pokemons;
+      notifyListeners();
+    });
   }
 
   Pokemon? getPokemon(int index) {
-    if (index < 0 && index >= _player.pokedex.length) {
+    if (index < 0 && index >= _pokedex.length) {
       return null;
     }
-    return _player.pokedex[index];
+    return _pokedex[index];
   }
 
-  int get pokedexCount => _player.pokedex.length;
-
-  Pokemon get selectedPokemon => _player.selectedPokemon;
-
-  set selectedPokemon(Pokemon pkm) => _player.selectedPokemon = pkm;
+  int get pokedexCount => _pokedex.length;
 }
