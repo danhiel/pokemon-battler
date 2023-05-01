@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 class PokedexViewModel extends ChangeNotifier {
   late PokemonRepository _pokemonRepo;
   List<Pokemon> _pokedex = [];
+  Pokemon? _selectedPokemon;
 
   PokedexViewModel() {
     _pokemonRepo = GetIt.instance.get<PokemonRepository>();
@@ -19,6 +20,10 @@ class PokedexViewModel extends ChangeNotifier {
     });
   }
 
+  List<Pokemon> getAllPokemon() {
+    return _pokedex;
+  }
+
   Pokemon? getPokemon(int index) {
     if (index < 0 && index >= _pokedex.length) {
       return null;
@@ -26,5 +31,14 @@ class PokedexViewModel extends ChangeNotifier {
     return _pokedex[index];
   }
 
-  int get pokedexCount => _pokedex.length;
+  Pokemon? get selectedPokemon => _selectedPokemon;
+
+  void set selectedPokemon(Pokemon? pkm) {
+    if (pkm != null) {
+      var pokemon = _pokedex.firstWhere((p) => p.shortName == pkm.shortName);
+      if (pokemon.isCaptured) {
+        _selectedPokemon = pkm;
+      }
+    }
+  }
 }

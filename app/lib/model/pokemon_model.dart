@@ -5,7 +5,7 @@ class Pokemon {
   @primaryKey
   final String id;
   final String name;
-  final String shortname;
+  final String shortName;
   final String type;
   final String weakness;
   final String description;
@@ -21,7 +21,7 @@ class Pokemon {
   Pokemon(
       this.id,
       this.name,
-      this.shortname,
+      this.shortName,
       this.type,
       this.weakness,
       this.description,

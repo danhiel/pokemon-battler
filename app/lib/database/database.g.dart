@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Pokemon` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `shortname` TEXT NOT NULL, `type` TEXT NOT NULL, `weakness` TEXT NOT NULL, `description` TEXT NOT NULL, `hp` INTEGER NOT NULL, `currentHp` INTEGER NOT NULL, `moves` TEXT NOT NULL, `photo` TEXT NOT NULL, `sprite` TEXT NOT NULL, `typeIcon` TEXT NOT NULL, `weaknessIcon` TEXT NOT NULL, `isCaptured` INTEGER NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `Pokemon` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `shortName` TEXT NOT NULL, `type` TEXT NOT NULL, `weakness` TEXT NOT NULL, `description` TEXT NOT NULL, `hp` INTEGER NOT NULL, `currentHp` INTEGER NOT NULL, `moves` TEXT NOT NULL, `photo` TEXT NOT NULL, `sprite` TEXT NOT NULL, `typeIcon` TEXT NOT NULL, `weaknessIcon` TEXT NOT NULL, `isCaptured` INTEGER NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -110,7 +110,7 @@ class _$PokemonDao extends PokemonDao {
             (Pokemon item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
-                  'shortname': item.shortname,
+                  'shortName': item.shortName,
                   'type': item.type,
                   'weakness': item.weakness,
                   'description': item.description,
@@ -131,7 +131,7 @@ class _$PokemonDao extends PokemonDao {
             (Pokemon item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
-                  'shortname': item.shortname,
+                  'shortName': item.shortName,
                   'type': item.type,
                   'weakness': item.weakness,
                   'description': item.description,
@@ -162,7 +162,7 @@ class _$PokemonDao extends PokemonDao {
         mapper: (Map<String, Object?> row) => Pokemon(
             row['id'] as String,
             row['name'] as String,
-            row['shortname'] as String,
+            row['shortName'] as String,
             row['type'] as String,
             row['weakness'] as String,
             row['description'] as String,
@@ -182,7 +182,7 @@ class _$PokemonDao extends PokemonDao {
         mapper: (Map<String, Object?> row) => Pokemon(
             row['id'] as String,
             row['name'] as String,
-            row['shortname'] as String,
+            row['shortName'] as String,
             row['type'] as String,
             row['weakness'] as String,
             row['description'] as String,
