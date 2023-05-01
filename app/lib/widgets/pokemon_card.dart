@@ -8,24 +8,22 @@ class PokemonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Image.asset(pokemon.photo, width: 150, height: 150,),
-          Column(
-            children: [
-              Text(
-                pokemon.name,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "Type: ${pokemon.type}",
-                style: const TextStyle(fontSize: 16),
-              )
-            ],
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        Image.asset(pokemon.photo, width: 150, height: 150,),
+        Column(
+          children: [
+            Text(
+              pokemon.name,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "Type: ${pokemon.type}",
+              style: const TextStyle(fontSize: 16),
+            )
+          ],
+        ),
+      ],
     );
   }
 }
