@@ -1,23 +1,28 @@
-import 'package:flutter/material.dart';
+import 'package:app/services/pokemon_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:app/main.dart';
-
 void main() {
-  testWidgets('Pokemon service test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('Pokemon service integration test', () {
+    test('getAllPokemonNames should return 200', () async {
+      var names = await getAllPokemonNames();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+      expect(names.statusCode, 200);
+      expect(names.body.length, greaterThan(0));
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    test('getPokemonNames should return 400 when invalid pokemon name',
+        () async {
+      var names = await getPokemonDetails('Dummy');
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      expect(names.statusCode, 400);
+      expect(names.body.length, greaterThan(0));
+    });
+
+    test('getPokemonNames should return 200', () async {
+      var names = await getPokemonDetails('Pikachu');
+
+      expect(names.statusCode, 200);
+      expect(names.body.length, greaterThan(0));
+    });
   });
 }
