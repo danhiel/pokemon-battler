@@ -31,9 +31,13 @@ class PokedexViewModel extends ChangeNotifier {
     return _pokedex[index];
   }
 
+  void insertPokemon(Pokemon pokemon) {
+    _pokemonRepo.insertPokemon(pokemon);
+  }
+
   Pokemon? get selectedPokemon => _selectedPokemon;
 
-  void set selectedPokemon(Pokemon? pkm) {
+  set selectedPokemon(Pokemon? pkm) {
     if (pkm != null) {
       var pokemon = _pokedex.firstWhere((p) => p.shortName == pkm.shortName);
       if (pokemon.isCaptured) {

@@ -11,20 +11,20 @@ class Pokedex extends StatefulWidget {
   State<Pokedex> createState() => _PokedexState();
 }
 
-renderPokedexView(List<Pokemon> pokemon) {
-  return SingleChildScrollView(
-      child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: pokemon.length,
-          itemBuilder: (context, index) => Card(
-                  child: ListTile(
-                title: Text(pokemon[index].name),
-                subtitle: Text(pokemon[index].description),
-                onTap: () => {print('todo: add pokemon details')},
-              ))));
-}
-
 class _PokedexState extends State<Pokedex> {
+  renderPokedexView(List<Pokemon> pokemon) {
+    return SingleChildScrollView(
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: pokemon.length,
+            itemBuilder: (context, index) => Card(
+                    child: ListTile(
+                  title: Text(pokemon[index].name),
+                  subtitle: Text(pokemon[index].description),
+                  onTap: () => {print('todo: add pokemon details')},
+                ))));
+  }
+
   @override
   Widget build(BuildContext context) {
     final gameEventViewModel = context.watch<PokedexViewModel>();
