@@ -1,4 +1,6 @@
 import 'package:app/database/pokemon_dao.dart';
+import 'package:app/model/pokemon_details_model.dart';
+import 'package:app/utils/pokedex_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -7,9 +9,11 @@ import 'repos/pokemon_repository.dart';
 import 'view_model/pokedex_view_model.dart';
 import 'widgets/app.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   startUpDatabase();
-  runApp(const MyApp());
+  final pokedex = await initializePokedex();
+  runApp(MyApp(pokedex));
 }
 
 void startUpDatabase() {
@@ -31,7 +35,9 @@ void startUpDatabase() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Map<String, PokemonDetails> pokedex;
+
+  const MyApp(this.pokedex, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +47,7 @@ class MyApp extends StatelessWidget {
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 return ChangeNotifierProvider(
-                    create: (context) => PokedexViewModel(),
+                    create: (context) => PokedexViewModel(pokedex),
                     child: MaterialApp(
                       title: 'Pokemon Battler',
                       theme: ThemeData(

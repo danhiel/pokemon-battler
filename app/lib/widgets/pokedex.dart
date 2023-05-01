@@ -1,8 +1,7 @@
+import 'package:app/model/pokemon_details_model.dart';
 import 'package:app/view_model/pokedex_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../model/pokemon_model.dart';
 
 class Pokedex extends StatefulWidget {
   const Pokedex({super.key});
@@ -12,25 +11,25 @@ class Pokedex extends StatefulWidget {
 }
 
 class _PokedexState extends State<Pokedex> {
-  renderPokedexView(List<Pokemon> pokemon) {
-    return SingleChildScrollView(
-        child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: pokemon.length,
-            itemBuilder: (context, index) => Card(
-                    child: ListTile(
-                  title: Text(pokemon[index].name),
-                  subtitle: Text(pokemon[index].description),
-                  onTap: () => {print('todo: add pokemon details')},
-                ))));
+  renderPokedexView(List<PokemonDetails> pokemon) {
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: pokemon.length,
+        itemBuilder: (context, index) => Card(
+                child: ListTile(
+              leading: Image(image: AssetImage(pokemon[index].sprite)),
+              title: Text(pokemon[index].name),
+              subtitle: Text(pokemon[index].description),
+              onTap: () => {print('todo: add pokemon details')},
+            )));
   }
 
   @override
   Widget build(BuildContext context) {
-    final gameEventViewModel = context.watch<PokedexViewModel>();
+    final pokedexViewModel = context.watch<PokedexViewModel>();
 
     return DefaultTabController(
-        initialIndex: 1,
+        initialIndex: 0,
         length: 3,
         child: Scaffold(
           appBar: AppBar(
@@ -51,9 +50,7 @@ class _PokedexState extends State<Pokedex> {
           ),
           body: TabBarView(
             children: <Widget>[
-              Center(
-                child: renderPokedexView(gameEventViewModel.getAllPokemon()),
-              ),
+              renderPokedexView(pokedexViewModel.getAllPokemon()),
               Center(
                 child: Text("ListView of uncaptured Pokemons"),
               ),
