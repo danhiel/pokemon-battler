@@ -6,23 +6,18 @@ void main() {
     test('getAllPokemonNames should return 200', () async {
       var names = await getAllPokemonNames();
 
-      expect(names.statusCode, 200);
-      expect(names.body.length, greaterThan(0));
+      expect(names.length, greaterThan(0));
     });
 
-    test('getPokemonNames should return 400 when invalid pokemon name',
+    test('getPokemonDetails should return 400 when invalid pokemon name',
         () async {
-      var names = await getPokemonDetails('Dummy');
-
-      expect(names.statusCode, 400);
-      expect(names.body.length, greaterThan(0));
+      expect(() async => await getPokemonDetails('Dummy'), throwsException);
     });
 
-    test('getPokemonNames should return 200', () async {
-      var names = await getPokemonDetails('Pikachu');
+    test('getPokemonDetails should return 200', () async {
+      var details = await getPokemonDetails('Pikachu');
 
-      expect(names.statusCode, 200);
-      expect(names.body.length, greaterThan(0));
+      expect(details.type, 'electric');
     });
   });
 }
