@@ -6,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('PickStarterPokemon', () {
     testWidgets('renders correctly', (WidgetTester tester) async {
-      // Build our widget
       await tester.pumpWidget(
           MaterialApp(
               home: PickStarterPokemon(onSelectPokemon: () {})
