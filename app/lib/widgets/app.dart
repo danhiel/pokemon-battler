@@ -33,23 +33,27 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: !_hasStarterPokemon? PickStarterPokemon(onSelectPokemon: _handleSelectedPokemon)  : _widgetOptions.elementAt(_selectedIndex),
+        child: !_hasStarterPokemon
+            ? PickStarterPokemon(onSelectPokemon: _handleSelectedPokemon)
+            : _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: !_hasStarterPokemon ? null : BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Battle',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Pokedex',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
+      bottomNavigationBar: !_hasStarterPokemon
+          ? null
+          : BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Battle',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.business),
+                  label: 'Pokedex',
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Colors.amber[800],
+              onTap: _onItemTapped,
+            ),
     );
   }
 }
