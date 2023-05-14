@@ -6,8 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('PickStarterPokemon', () {
     testWidgets('renders correctly', (WidgetTester tester) async {
-      await tester.pumpWidget(
-          MaterialApp(home: PickStarterPokemon(onSelectPokemon: () {})));
+      await tester.pumpWidget(MaterialApp(home: PickStarterPokemon()));
 
       // Verify that the correct number of Pokemon cards are displayed
       expect(find.byType(PokemonCard), findsNWidgets(3));
@@ -21,13 +20,9 @@ void main() {
         (WidgetTester tester) async {
       // Create a mock callback function
       bool isCallbackCalled = false;
-      onSelectPokemon() {
-        isCallbackCalled = true;
-      }
 
       // Build our widget with the mock callback
-      await tester.pumpWidget(MaterialApp(
-          home: PickStarterPokemon(onSelectPokemon: onSelectPokemon)));
+      await tester.pumpWidget(const MaterialApp(home: PickStarterPokemon()));
 
       // Tap the "Select Pokemon" button
       await tester.tap(find.text('Select Pokemon'));
@@ -38,8 +33,7 @@ void main() {
     });
 
     testWidgets('Verify rendered Pokemon card', (WidgetTester tester) async {
-      await tester.pumpWidget(
-          MaterialApp(home: PickStarterPokemon(onSelectPokemon: () {})));
+      await tester.pumpWidget(const MaterialApp(home: PickStarterPokemon()));
 
       expect(find.text('Charmander'), findsOneWidget);
       expect(find.text('Bulbasaur'), findsOneWidget);
