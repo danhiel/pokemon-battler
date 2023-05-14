@@ -7,7 +7,7 @@ import 'package:app/services/pokemon_service.dart';
 
 Future<Map<String, PokemonDetails>> fetchPokemonInfo() async {
   Map<String, PokemonDetails> pokedex = {};
-  PokemonService.instance.getAllPokemonNames().then((res) async {
+  await PokemonService.instance.getAllPokemonNames().then((res) async {
     var splits = res.split('\n');
     for (var name in splits) {
       var nameSplit = name.split(':');

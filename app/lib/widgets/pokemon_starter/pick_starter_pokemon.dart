@@ -1,56 +1,10 @@
-import 'package:app/model/pokemon_model.dart';
-import 'package:app/widgets/pokedex/pokemon_card.dart';
+import 'package:app/view_model/pkm_info_view_model.dart';
+import 'package:app/view_model/pokedex_view_model.dart';
+import 'package:app/widgets/pokemon_starter/pokemon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:go_router/go_router.dart';
-
-List<Pokemon> _pokemonList = <Pokemon>[
-  Pokemon(
-      "1",
-      "Charmander",
-      "CH",
-      "type",
-      "weakness",
-      "description",
-      100,
-      100,
-      "",
-      "assets/pokemons/charmander.jpg",
-      "assets/pokemons/charmander.jpg",
-      "typeIcon",
-      "weaknessIcon",
-      false),
-  Pokemon(
-      "2",
-      "Bulbasaur",
-      "BU",
-      "type",
-      "weakness",
-      "description",
-      100,
-      100,
-      "",
-      "assets/pokemons/bulbasaur.jpg",
-      "assets/pokemons/bulbasaur.jpg",
-      "typeIcon",
-      "weaknessIcon",
-      false),
-  Pokemon(
-      "3",
-      "Squirtle",
-      "SQ",
-      "type",
-      "weakness",
-      "description",
-      100,
-      100,
-      "",
-      "assets/pokemons/squirtle.jpg",
-      "assets/pokemons/squirtle.jpg",
-      "typeIcon",
-      "weaknessIcon",
-      false),
-];
+import 'package:provider/provider.dart';
 
 class PickStarterPokemon extends StatefulWidget {
   const PickStarterPokemon({super.key});
@@ -60,14 +14,21 @@ class PickStarterPokemon extends StatefulWidget {
 }
 
 class _PickStarterPokemon extends State<PickStarterPokemon> {
-  String _selectedPokemon = _pokemonList[0].id;
+  final _pokemonList = [
+    PokemonInfoViewModel.instance.getPokemon('charmander'),
+    PokemonInfoViewModel.instance.getPokemon('squirtle'),
+    PokemonInfoViewModel.instance.getPokemon('bulbasaur')
+  ];
+  int _selectedPokemonIndex = 0;
 
-  _onSelectPokemon() {
+  _onSelectPokemon(PokedexViewModel pokedexViewModel) {
     context.go('/home');
   }
 
   @override
   Widget build(BuildContext context) {
+    final gameEventViewModel = context.watch<PokedexViewModel>();
+
     return Scaffold(
       body: Stack(
         children: [
@@ -87,7 +48,7 @@ class _PickStarterPokemon extends State<PickStarterPokemon> {
                       height: 215.0,
                       onPageChanged: (index, reason) {
                         setState(() {
-                          _selectedPokemon = _pokemonList[index].id;
+                          _selectedPokemonIndex = index;
                         });
                       }),
                   items: _pokemonList.map((pokemon) {
@@ -101,12 +62,16 @@ class _PickStarterPokemon extends State<PickStarterPokemon> {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 border: Border.all(
-                                  color: _selectedPokemon == pokemon.id
-                                      ? Colors.blueAccent
-                                      : Colors.grey,
-                                  width: _selectedPokemon == pokemon.id
-                                      ? 5.0
-                                      : 2.0,
+                                  color:
+                                      _pokemonList[_selectedPokemonIndex].id ==
+                                              pokemon.id
+                                          ? Colors.blueAccent
+                                          : Colors.grey,
+                                  width:
+                                      _pokemonList[_selectedPokemonIndex].id ==
+                                              pokemon.id
+                                          ? 5.0
+                                          : 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
@@ -119,7 +84,7 @@ class _PickStarterPokemon extends State<PickStarterPokemon> {
                 Padding(
                   padding: const EdgeInsets.only(top: 25),
                   child: ElevatedButton(
-                      onPressed: _onSelectPokemon,
+                      onPressed: () => _onSelectPokemon(gameEventViewModel),
                       child: const Text("Select Pokemon")),
                 )
               ],

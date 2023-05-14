@@ -1,5 +1,5 @@
 import 'package:app/model/pokemon_model.dart';
-import 'package:app/widgets/pokedex/pokemon_card.dart';
+import 'package:app/widgets/pokemon_starter/pokemon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

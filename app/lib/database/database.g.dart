@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Pokemon` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `shortName` TEXT NOT NULL, `type` TEXT NOT NULL, `weakness` TEXT NOT NULL, `description` TEXT NOT NULL, `hp` INTEGER NOT NULL, `currentHp` INTEGER NOT NULL, `moves` TEXT NOT NULL, `photo` TEXT NOT NULL, `sprite` TEXT NOT NULL, `typeIcon` TEXT NOT NULL, `weaknessIcon` TEXT NOT NULL, `isCaptured` INTEGER NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `Pokemon` (`shortName` TEXT NOT NULL, `name` TEXT NOT NULL, `isCaptured` INTEGER NOT NULL, PRIMARY KEY (`shortName`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -108,40 +108,18 @@ class _$PokemonDao extends PokemonDao {
             database,
             'Pokemon',
             (Pokemon item) => <String, Object?>{
-                  'id': item.id,
-                  'name': item.name,
                   'shortName': item.shortName,
-                  'type': item.type,
-                  'weakness': item.weakness,
-                  'description': item.description,
-                  'hp': item.hp,
-                  'currentHp': item.currentHp,
-                  'moves': item.moves,
-                  'photo': item.photo,
-                  'sprite': item.sprite,
-                  'typeIcon': item.typeIcon,
-                  'weaknessIcon': item.weaknessIcon,
+                  'name': item.name,
                   'isCaptured': item.isCaptured ? 1 : 0
                 },
             changeListener),
         _pokemonUpdateAdapter = UpdateAdapter(
             database,
             'Pokemon',
-            ['id'],
+            ['shortName'],
             (Pokemon item) => <String, Object?>{
-                  'id': item.id,
-                  'name': item.name,
                   'shortName': item.shortName,
-                  'type': item.type,
-                  'weakness': item.weakness,
-                  'description': item.description,
-                  'hp': item.hp,
-                  'currentHp': item.currentHp,
-                  'moves': item.moves,
-                  'photo': item.photo,
-                  'sprite': item.sprite,
-                  'typeIcon': item.typeIcon,
-                  'weaknessIcon': item.weaknessIcon,
+                  'name': item.name,
                   'isCaptured': item.isCaptured ? 1 : 0
                 },
             changeListener);
@@ -159,41 +137,15 @@ class _$PokemonDao extends PokemonDao {
   @override
   Future<List<Pokemon>> getAllPokemon() async {
     return _queryAdapter.queryList('SELECT * FROM Pokemon',
-        mapper: (Map<String, Object?> row) => Pokemon(
-            row['id'] as String,
-            row['name'] as String,
-            row['shortName'] as String,
-            row['type'] as String,
-            row['weakness'] as String,
-            row['description'] as String,
-            row['hp'] as int,
-            row['currentHp'] as int,
-            row['moves'] as String,
-            row['photo'] as String,
-            row['sprite'] as String,
-            row['typeIcon'] as String,
-            row['weaknessIcon'] as String,
-            (row['isCaptured'] as int) != 0));
+        mapper: (Map<String, Object?> row) => Pokemon(row['name'] as String,
+            row['shortName'] as String, (row['isCaptured'] as int) != 0));
   }
 
   @override
   Stream<List<Pokemon>> watchAllPokemons() {
     return _queryAdapter.queryListStream('SELECT * FROM Pokemon',
-        mapper: (Map<String, Object?> row) => Pokemon(
-            row['id'] as String,
-            row['name'] as String,
-            row['shortName'] as String,
-            row['type'] as String,
-            row['weakness'] as String,
-            row['description'] as String,
-            row['hp'] as int,
-            row['currentHp'] as int,
-            row['moves'] as String,
-            row['photo'] as String,
-            row['sprite'] as String,
-            row['typeIcon'] as String,
-            row['weaknessIcon'] as String,
-            (row['isCaptured'] as int) != 0),
+        mapper: (Map<String, Object?> row) => Pokemon(row['name'] as String,
+            row['shortName'] as String, (row['isCaptured'] as int) != 0),
         queryableName: 'Pokemon',
         isView: false);
   }

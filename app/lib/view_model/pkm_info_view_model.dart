@@ -1,5 +1,5 @@
 import 'package:app/model/pokemon_details_model.dart';
-import 'package:app/services/pokemon_service.dart';
+import 'package:app/model/pokemon_model.dart';
 import 'package:app/utils/config_utils.dart';
 import 'package:flutter/widgets.dart';
 
@@ -9,8 +9,9 @@ class PokemonInfoViewModel extends ChangeNotifier {
 
   PokemonInfoViewModel._();
 
-  initializePokemonInfo() async {
+  Future<Map<String, PokemonDetails>> initializePokemonInfo() async {
     _pokedex = await fetchPokemonInfo();
+    return _pokedex;
   }
 
   List<String> get allPokemonSprites =>
@@ -22,5 +23,13 @@ class PokemonInfoViewModel extends ChangeNotifier {
 
   List<PokemonDetails> getAllPokemon() {
     return _pokedex.values.toList();
+  }
+
+  PokemonDetails getPokemon(String name) {
+    var pokemon = _pokedex[name];
+    if (pokemon != null) {
+      return pokemon;
+    }
+    throw 'No pokemon found';
   }
 }

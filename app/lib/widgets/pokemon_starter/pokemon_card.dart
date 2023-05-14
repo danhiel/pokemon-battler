@@ -1,8 +1,8 @@
+import 'package:app/model/pokemon_details_model.dart';
 import 'package:flutter/material.dart';
-import 'package:app/model/pokemon_model.dart';
 
 class PokemonCard extends StatelessWidget {
-  final Pokemon pokemon;
+  final PokemonDetails pokemon;
 
   const PokemonCard({super.key, required this.pokemon});
 

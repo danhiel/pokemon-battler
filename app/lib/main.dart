@@ -1,3 +1,4 @@
+import 'package:app/model/pokemon_details_model.dart';
 import 'package:app/utils/config_utils.dart';
 import 'package:app/view_model/pkm_info_view_model.dart';
 import 'package:app/widgets/app.dart';
@@ -30,15 +31,17 @@ final router = GoRouter(
   ],
 );
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  startUpDatabase(); // Start up SQLite database
-  PokemonInfoViewModel.instance.initializePokemonInfo();
-  runApp(const MyApp());
+  startUpDatabase();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Future<Map<String, PokemonDetails>> pokedexInfo =
+      PokemonInfoViewModel.instance.initializePokemonInfo();
+
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
         home: FutureBuilder(
-            future: GetIt.instance.allReady(),
+            future: pokedexInfo,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 return ChangeNotifierProvider(

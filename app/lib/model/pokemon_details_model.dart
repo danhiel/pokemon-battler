@@ -1,5 +1,3 @@
-import 'package:app/model/pokemon_move_model.dart';
-
 class PokemonDetails {
   final int id;
   final String name;

@@ -6,6 +6,10 @@ class StartUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    onPressToStart() {
+      context.go('/new');
+    }
+
     return Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -23,21 +27,23 @@ class StartUp extends StatelessWidget {
                 color: Color.fromRGBO(255, 255, 255, 0.9),
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
-              child: Column(children: [
-                const Text(
-                  'Pkm Battler',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 36,
-                      color: Colors.black,
-                      decoration: TextDecoration.none),
-                ),
-                const Divider(color: Colors.black),
-                ElevatedButton(
-                    onPressed: () => context.go('/new'),
-                    child: const Text('Press to start'))
-              ]),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const Text(
+                      'Pokemon Battler',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 36,
+                          color: Colors.black,
+                          decoration: TextDecoration.none),
+                    ),
+                    const Divider(color: Colors.black),
+                    ElevatedButton(
+                        onPressed: onPressToStart,
+                        child: const Text('Press to start'))
+                  ]),
             ),
           ),
         ));

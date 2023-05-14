@@ -1,5 +1,4 @@
 import 'package:app/widgets/pokedex/pokedex.dart';
-import 'package:app/widgets/pokemon_starter/pick_starter_pokemon.dart';
 import 'package:flutter/material.dart';
 
 import 'home/home.dart';
