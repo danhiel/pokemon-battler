@@ -10,7 +10,11 @@ class PokemonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Image.asset(pokemon.photo, width: 150, height: 150,),
+        Image.asset(
+          pokemon.photo,
+          width: 150,
+          height: 150,
+        ),
         Column(
           children: [
             Text(

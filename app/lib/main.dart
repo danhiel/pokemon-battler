@@ -1,62 +1,75 @@
-import 'package:app/database/pokemon_dao.dart';
-import 'package:app/model/pokemon_details_model.dart';
-import 'package:app/utils/pokedex_utils.dart';
+import 'package:app/utils/config_utils.dart';
+import 'package:app/view_model/pkm_info_view_model.dart';
+import 'package:app/widgets/app.dart';
+import 'package:app/widgets/common/background_image.dart';
+import 'package:app/widgets/pokemon_starter/pick_starter_pokemon.dart';
+import 'package:app/widgets/start_up/start_up.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'database/database.dart';
-import 'repos/pokemon_repository.dart';
 import 'view_model/pokedex_view_model.dart';
-import 'widgets/app.dart';
 
-void main() async {
+final router = GoRouter(
+  initialLocation: '/',
+  routes: [
+    GoRoute(
+      path: '/',
+      name: 'start',
+      builder: (context, _) => const StartUp(),
+    ),
+    GoRoute(
+        path: '/new',
+        name: 'newUser',
+        builder: (context, _) => const PickStarterPokemon()),
+    GoRoute(path: '/home', name: 'home', builder: (context, _) => const App()),
+    GoRoute(
+        path: '/pokedex', name: 'pokedex', builder: (context, _) => StartUp()),
+    GoRoute(
+        path: '/battle', name: 'battle', builder: (context, _) => StartUp()),
+  ],
+);
+
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  startUpDatabase();
-  final pokedex = await initializePokedex();
-  runApp(MyApp(pokedex));
-}
-
-void startUpDatabase() {
-  GetIt getIt = GetIt.instance;
-
-  // Register database
-  getIt.registerSingletonAsync<AppDatabase>(
-      () async => $FloorAppDatabase.databaseBuilder('pokemon.db').build());
-
-  // Register DAO
-  getIt.registerSingletonWithDependencies<PokemonDao>(() {
-    return GetIt.instance.get<AppDatabase>().pokemonDao;
-  }, dependsOn: [AppDatabase]);
-
-  // Register repositories.
-  getIt.registerSingletonWithDependencies<PokemonRepository>(
-      () => PokemonRepository(),
-      dependsOn: [AppDatabase, PokemonDao]);
+  startUpDatabase(); // Start up SQLite database
+  PokemonInfoViewModel.instance.initializePokemonInfo();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Map<String, PokemonDetails> pokedex;
-
-  const MyApp(this.pokedex, {super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    renderLoadingScreen() {
+      return Stack(children: const [
+        BackgroundImage(),
+        Center(
+          child: Image(
+              image: AssetImage('assets/icons/loading-pikachu.gif'),
+              height: 120),
+        )
+      ]);
+    }
+
     return MaterialApp(
         home: FutureBuilder(
             future: GetIt.instance.allReady(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 return ChangeNotifierProvider(
-                    create: (context) => PokedexViewModel(pokedex),
-                    child: MaterialApp(
+                    create: (context) => PokedexViewModel(),
+                    child: MaterialApp.router(
                       title: 'Pokemon Battler',
+                      debugShowCheckedModeBanner: false,
                       theme: ThemeData(
                         primarySwatch: Colors.red,
                       ),
-                      home: const App(),
+                      routerConfig: router,
                     ));
               }
-              return const Center(child: CircularProgressIndicator());
+              return renderLoadingScreen();
             }));
   }
 }

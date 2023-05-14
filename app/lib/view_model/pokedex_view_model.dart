@@ -1,4 +1,3 @@
-import 'package:app/model/pokemon_details_model.dart';
 import 'package:app/model/pokemon_model.dart';
 import 'package:app/repos/pokemon_repository.dart';
 import 'package:flutter/widgets.dart';
@@ -6,13 +5,11 @@ import 'package:get_it/get_it.dart';
 
 class PokedexViewModel extends ChangeNotifier {
   late PokemonRepository _pokemonRepo;
-  Map<String, PokemonDetails> _pokedex = {};
   List<Pokemon> _pokemons = [];
   Pokemon? _selectedPokemon;
 
-  PokedexViewModel(Map<String, PokemonDetails> pokedex) {
+  PokedexViewModel() {
     _pokemonRepo = GetIt.instance.get<PokemonRepository>();
-    _pokedex = pokedex;
     watchPokedex();
   }
 
@@ -21,17 +18,6 @@ class PokedexViewModel extends ChangeNotifier {
       _pokemons = pokemons;
       notifyListeners();
     });
-  }
-
-  List<String> get allPokemonSprites =>
-      _pokedex.values.map((e) => e.sprite).toList();
-
-  bool hasInitializedPokedex() {
-    return _pokedex.values.isNotEmpty;
-  }
-
-  List<PokemonDetails> getAllPokemon() {
-    return _pokedex.values.toList();
   }
 
   Pokemon? getPokemon(int index) {

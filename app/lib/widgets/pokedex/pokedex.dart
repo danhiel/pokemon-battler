@@ -1,4 +1,5 @@
 import 'package:app/model/pokemon_details_model.dart';
+import 'package:app/view_model/pkm_info_view_model.dart';
 import 'package:app/view_model/pokedex_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -50,7 +51,7 @@ class _PokedexState extends State<Pokedex> {
           ),
           body: TabBarView(
             children: <Widget>[
-              renderPokedexView(pokedexViewModel.getAllPokemon()),
+              renderPokedexView(PokemonInfoViewModel.instance.getAllPokemon()),
               Center(
                 child: Text("ListView of uncaptured Pokemons"),
               ),

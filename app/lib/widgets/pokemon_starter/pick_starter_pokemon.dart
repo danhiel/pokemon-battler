@@ -1,7 +1,8 @@
 import 'package:app/model/pokemon_model.dart';
-import 'package:app/widgets/pokemon_card.dart';
+import 'package:app/widgets/pokedex/pokemon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:go_router/go_router.dart';
 
 List<Pokemon> _pokemonList = <Pokemon>[
   Pokemon(
@@ -52,8 +53,7 @@ List<Pokemon> _pokemonList = <Pokemon>[
 ];
 
 class PickStarterPokemon extends StatefulWidget {
-  final Function onSelectPokemon;
-  const PickStarterPokemon({super.key, required this.onSelectPokemon});
+  const PickStarterPokemon({super.key});
 
   @override
   State<PickStarterPokemon> createState() => _PickStarterPokemon();
@@ -61,6 +61,10 @@ class PickStarterPokemon extends StatefulWidget {
 
 class _PickStarterPokemon extends State<PickStarterPokemon> {
   String _selectedPokemon = _pokemonList[0].id;
+
+  _onSelectPokemon() {
+    context.go('/home');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,9 +119,7 @@ class _PickStarterPokemon extends State<PickStarterPokemon> {
                 Padding(
                   padding: const EdgeInsets.only(top: 25),
                   child: ElevatedButton(
-                      onPressed: () {
-                        widget.onSelectPokemon();
-                      },
+                      onPressed: _onSelectPokemon,
                       child: const Text("Select Pokemon")),
                 )
               ],
