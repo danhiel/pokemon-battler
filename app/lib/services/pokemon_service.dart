@@ -21,4 +21,26 @@ class PokemonService {
     }
     return PokemonDetails.fromJson(jsonDecode(response.body));
   }
+
+  Future<PokemonDetails> startPokemonBattle(String selectedPokemon) async {
+    final response = await http.post(
+        Uri.parse(
+            'https://courses.cs.washington.edu/courses/cse154/webservices/pokedex/game.php'),
+        body: {'mypokemon': selectedPokemon, 'startgame': true});
+    if (response.statusCode == 400) {
+      throw Exception('Invalid parameters.');
+    }
+    return PokemonDetails.fromJson(jsonDecode(response.body));
+  }
+
+  Future<PokemonDetails> playMove(String guid, String puid, String move) async {
+    final response = await http.post(
+        Uri.parse(
+            'https://courses.cs.washington.edu/courses/cse154/webservices/pokedex/game.php'),
+        body: {'guid': guid, 'puid': puid, 'movename': move});
+    if (response.statusCode == 400) {
+      throw Exception('Invalid parameters.');
+    }
+    return PokemonDetails.fromJson(jsonDecode(response.body));
+  }
 }
