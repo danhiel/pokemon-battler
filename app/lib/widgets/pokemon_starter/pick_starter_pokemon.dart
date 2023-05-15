@@ -14,11 +14,7 @@ class PickStarterPokemon extends StatefulWidget {
 }
 
 class _PickStarterPokemon extends State<PickStarterPokemon> {
-  final _pokemonList = [
-    PokemonInfoViewModel.instance.getPokemon('charmander'),
-    PokemonInfoViewModel.instance.getPokemon('squirtle'),
-    PokemonInfoViewModel.instance.getPokemon('bulbasaur')
-  ];
+  final _pokemonList = PokemonInfoViewModel.instance.starterPokemons;
   int _selectedPokemonIndex = 0;
 
   _onSelectPokemon(PokedexViewModel pokedexViewModel) {

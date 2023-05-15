@@ -12,15 +12,13 @@ class Pokedex extends StatefulWidget {
 }
 
 class _PokedexState extends State<Pokedex> {
-  renderPokedexView(List<PokemonDetails> pokemon) {
+  renderPokedexView(List<String> pokemonSprites) {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: pokemon.length,
+        itemCount: pokemonSprites.length,
         itemBuilder: (context, index) => Card(
                 child: ListTile(
-              leading: Image(image: AssetImage(pokemon[index].sprite)),
-              title: Text(pokemon[index].name),
-              subtitle: Text(pokemon[index].description),
+              leading: Image(image: AssetImage(pokemonSprites[index])),
               onTap: () => {print('todo: add pokemon details')},
             )));
   }
@@ -51,7 +49,8 @@ class _PokedexState extends State<Pokedex> {
           ),
           body: TabBarView(
             children: <Widget>[
-              renderPokedexView(PokemonInfoViewModel.instance.getAllPokemon()),
+              renderPokedexView(
+                  PokemonInfoViewModel.instance.allPokemonSprites),
               Center(
                 child: Text("ListView of uncaptured Pokemons"),
               ),

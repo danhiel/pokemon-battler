@@ -1,4 +1,3 @@
-import 'package:app/model/pokemon_details_model.dart';
 import 'package:app/utils/config_utils.dart';
 import 'package:app/view_model/pkm_info_view_model.dart';
 import 'package:app/widgets/app.dart';
@@ -6,7 +5,6 @@ import 'package:app/widgets/common/background_image.dart';
 import 'package:app/widgets/pokemon_starter/pick_starter_pokemon.dart';
 import 'package:app/widgets/start_up/start_up.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'view_model/pokedex_view_model.dart';
@@ -38,7 +36,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final Future<Map<String, PokemonDetails>> pokedexInfo =
+  final Future<Map<String, String>> pokedexInfo =
       PokemonInfoViewModel.instance.initializePokemonInfo();
 
   MyApp({super.key});
