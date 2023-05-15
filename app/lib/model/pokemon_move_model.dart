@@ -1,7 +1,11 @@
 class Move {
-  final String _name;
-  final String _type;
-  final int? _dp;
+  final String name;
+  final String type;
+  final int? dp;
 
-  Move(this._name, this._type, this._dp);
+  Move({required this.name, required this.type, required this.dp});
+
+  factory Move.fromJson(Map<String, dynamic> json) {
+    return Move(name: json['name'], type: json['type'], dp: json['dp']);
+  }
 }
