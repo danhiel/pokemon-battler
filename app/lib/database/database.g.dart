@@ -7,21 +7,21 @@ part of 'database.dart';
 // **************************************************************************
 
 // ignore: avoid_classes_with_only_static_members
-class $FloorAppDatabase {
+class $FloorPokedexDatabase {
   /// Creates a database builder for a persistent database.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static _$AppDatabaseBuilder databaseBuilder(String name) =>
-      _$AppDatabaseBuilder(name);
+  static _$PokedexDatabaseBuilder databaseBuilder(String name) =>
+      _$PokedexDatabaseBuilder(name);
 
   /// Creates a database builder for an in memory database.
   /// Information stored in an in memory database disappears when the process is killed.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static _$AppDatabaseBuilder inMemoryDatabaseBuilder() =>
-      _$AppDatabaseBuilder(null);
+  static _$PokedexDatabaseBuilder inMemoryDatabaseBuilder() =>
+      _$PokedexDatabaseBuilder(null);
 }
 
-class _$AppDatabaseBuilder {
-  _$AppDatabaseBuilder(this.name);
+class _$PokedexDatabaseBuilder {
+  _$PokedexDatabaseBuilder(this.name);
 
   final String? name;
 
@@ -30,23 +30,23 @@ class _$AppDatabaseBuilder {
   Callback? _callback;
 
   /// Adds migrations to the builder.
-  _$AppDatabaseBuilder addMigrations(List<Migration> migrations) {
+  _$PokedexDatabaseBuilder addMigrations(List<Migration> migrations) {
     _migrations.addAll(migrations);
     return this;
   }
 
   /// Adds a database [Callback] to the builder.
-  _$AppDatabaseBuilder addCallback(Callback callback) {
+  _$PokedexDatabaseBuilder addCallback(Callback callback) {
     _callback = callback;
     return this;
   }
 
   /// Creates the database and initializes it.
-  Future<AppDatabase> build() async {
+  Future<PokedexDatabase> build() async {
     final path = name != null
         ? await sqfliteDatabaseFactory.getDatabasePath(name!)
         : ':memory:';
-    final database = _$AppDatabase();
+    final database = _$PokedexDatabase();
     database.database = await database.open(
       path,
       _migrations,
@@ -56,8 +56,8 @@ class _$AppDatabaseBuilder {
   }
 }
 
-class _$AppDatabase extends AppDatabase {
-  _$AppDatabase([StreamController<String>? listener]) {
+class _$PokedexDatabase extends PokedexDatabase {
+  _$PokedexDatabase([StreamController<String>? listener]) {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Pokemon` (`id` INTEGER NOT NULL, `selected` INTEGER NOT NULL, `shortName` TEXT NOT NULL, `name` TEXT NOT NULL, `captured` INTEGER NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `Pokemon` (`id` INTEGER NOT NULL, `shortName` TEXT NOT NULL, `name` TEXT NOT NULL, `selected` INTEGER NOT NULL, `captured` INTEGER NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -109,9 +109,9 @@ class _$PokemonDao extends PokemonDao {
             'Pokemon',
             (Pokemon item) => <String, Object?>{
                   'id': item.id,
-                  'selected': item.selected ? 1 : 0,
                   'shortName': item.shortName,
                   'name': item.name,
+                  'selected': item.selected ? 1 : 0,
                   'captured': item.captured ? 1 : 0
                 },
             changeListener),
@@ -121,9 +121,9 @@ class _$PokemonDao extends PokemonDao {
             ['id'],
             (Pokemon item) => <String, Object?>{
                   'id': item.id,
-                  'selected': item.selected ? 1 : 0,
                   'shortName': item.shortName,
                   'name': item.name,
+                  'selected': item.selected ? 1 : 0,
                   'captured': item.captured ? 1 : 0
                 },
             changeListener);
@@ -143,9 +143,9 @@ class _$PokemonDao extends PokemonDao {
     return _queryAdapter.queryList('SELECT * FROM Pokemon',
         mapper: (Map<String, Object?> row) => Pokemon(
             row['id'] as int,
-            (row['selected'] as int) != 0,
             row['shortName'] as String,
             row['name'] as String,
+            (row['selected'] as int) != 0,
             (row['captured'] as int) != 0));
   }
 
@@ -154,9 +154,9 @@ class _$PokemonDao extends PokemonDao {
     return _queryAdapter.queryList('SELECT * FROM Pokemon WHERE captured',
         mapper: (Map<String, Object?> row) => Pokemon(
             row['id'] as int,
-            (row['selected'] as int) != 0,
             row['shortName'] as String,
             row['name'] as String,
+            (row['selected'] as int) != 0,
             (row['captured'] as int) != 0));
   }
 
@@ -165,9 +165,9 @@ class _$PokemonDao extends PokemonDao {
     return _queryAdapter.queryListStream('SELECT * FROM Pokemon',
         mapper: (Map<String, Object?> row) => Pokemon(
             row['id'] as int,
-            (row['selected'] as int) != 0,
             row['shortName'] as String,
             row['name'] as String,
+            (row['selected'] as int) != 0,
             (row['captured'] as int) != 0),
         queryableName: 'Pokemon',
         isView: false);
@@ -178,9 +178,9 @@ class _$PokemonDao extends PokemonDao {
     return _queryAdapter.query('SELECT * FROM Pokemon WHERE shortName = ?1',
         mapper: (Map<String, Object?> row) => Pokemon(
             row['id'] as int,
-            (row['selected'] as int) != 0,
             row['shortName'] as String,
             row['name'] as String,
+            (row['selected'] as int) != 0,
             (row['captured'] as int) != 0),
         arguments: [shortName]);
   }
@@ -190,9 +190,9 @@ class _$PokemonDao extends PokemonDao {
     return _queryAdapter.query('SELECT * FROM Pokemon WHERE id = ?1',
         mapper: (Map<String, Object?> row) => Pokemon(
             row['id'] as int,
-            (row['selected'] as int) != 0,
             row['shortName'] as String,
             row['name'] as String,
+            (row['selected'] as int) != 0,
             (row['captured'] as int) != 0),
         arguments: [id]);
   }
@@ -202,9 +202,9 @@ class _$PokemonDao extends PokemonDao {
     return _queryAdapter.query('SELECT * FROM Pokemon WHERE selected',
         mapper: (Map<String, Object?> row) => Pokemon(
             row['id'] as int,
-            (row['selected'] as int) != 0,
             row['shortName'] as String,
             row['name'] as String,
+            (row['selected'] as int) != 0,
             (row['captured'] as int) != 0));
   }
 

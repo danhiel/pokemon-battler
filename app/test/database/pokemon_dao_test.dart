@@ -5,7 +5,7 @@ import 'package:app/database/pokemon_dao.dart';
 
 void main() {
   group('database tests', () {
-    late AppDatabase database;
+    late PokedexDatabase database;
     late PokemonDao pokemonDao;
 
     setUp(() async {

@@ -19,16 +19,16 @@ void startUpDatabase() {
   GetIt getIt = GetIt.instance;
 
   // Register database
-  getIt.registerSingletonAsync<AppDatabase>(
+  getIt.registerSingletonAsync<PokedexDatabase>(
       () async => $FloorAppDatabase.databaseBuilder('pokemon.db').build());
 
   // Register DAO
   getIt.registerSingletonWithDependencies<PokemonDao>(() {
-    return GetIt.instance.get<AppDatabase>().pokemonDao;
-  }, dependsOn: [AppDatabase]);
+    return GetIt.instance.get<PokedexDatabase>().pokemonDao;
+  }, dependsOn: [PokedexDatabase]);
 
   // Register repositories.
   getIt.registerSingletonWithDependencies<PokemonRepository>(
       () => PokemonRepository(),
-      dependsOn: [AppDatabase, PokemonDao]);
+      dependsOn: [PokedexDatabase, PokemonDao]);
 }

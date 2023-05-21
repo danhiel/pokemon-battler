@@ -5,13 +5,13 @@ class Pokemon {
   @primaryKey
   final int id;
 
-  final bool selected;
-
   final String shortName;
 
   final String name;
 
-  final bool captured;
+  bool selected;
 
-  Pokemon(this.id, this.selected, this.shortName, this.name, this.captured);
+  bool captured;
+
+  Pokemon(this.id, this.shortName, this.name, this.selected, this.captured);
 }

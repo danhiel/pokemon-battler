@@ -8,6 +8,6 @@ import 'pokemon_entity.dart';
 part 'database.g.dart';
 
 @Database(version: 1, entities: [Pokemon])
-abstract class AppDatabase extends FloorDatabase {
+abstract class PokedexDatabase extends FloorDatabase {
   PokemonDao get pokemonDao;
 }
