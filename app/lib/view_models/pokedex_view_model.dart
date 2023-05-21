@@ -7,6 +7,7 @@ class PokedexViewModel extends ChangeNotifier {
   List<Pokemon> _pokedex = [];
 
   PokedexViewModel(this._database) {
+    print('hi');
     watchPokedex();
   }
 
@@ -25,6 +26,10 @@ class PokedexViewModel extends ChangeNotifier {
 
   Future<Pokemon?> get selectedPokemon async =>
       await _database.pokemonDao.getSelectedPokemon();
+
+  Pokemon? getPokemonByShortName(String shortName) {
+    _pokedex.firstWhere((pkm) => pkm.shortName == shortName);
+  }
 
   Future<void> setSelectedPokemon({Pokemon? pokemon, String? shortName}) async {
     var newPokemon = _getPokemonToUpdate(pokemon, shortName);

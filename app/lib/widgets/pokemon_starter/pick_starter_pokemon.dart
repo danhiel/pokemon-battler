@@ -15,15 +15,12 @@ class PickStarterPokemon extends StatefulWidget {
 }
 
 class _PickStarterPokemon extends State<PickStarterPokemon> {
-  final _pokemonList = PokemonInfoViewModel.instance.starterPokemons;
+  final _pokemonList = ['charmander', 'squirtle', 'bulbasaur'];
   int _selectedPokemonIndex = 0;
 
   _onSelectPokemon(PokedexViewModel pokedexViewModel) {
     final selectedPokemon = _pokemonList[_selectedPokemonIndex];
-    final pokemon = Pokemon(
-        selectedPokemon.id, selectedPokemon.shortName, selectedPokemon.name);
-    pokedexViewModel.selectedPokemon = selectedPokemon;
-    pokedexViewModel.insertPokemon(pokemon);
+    pokedexViewModel.setSelectedPokemon(shortName: selectedPokemon);
     context.go('/home');
   }
 
@@ -64,20 +61,23 @@ class _PickStarterPokemon extends State<PickStarterPokemon> {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 border: Border.all(
-                                  color:
-                                      _pokemonList[_selectedPokemonIndex].id ==
-                                              pokemon.id
-                                          ? Colors.blueAccent
-                                          : Colors.grey,
-                                  width:
-                                      _pokemonList[_selectedPokemonIndex].id ==
-                                              pokemon.id
-                                          ? 5.0
-                                          : 2.0,
+                                  color: _pokemonList[_selectedPokemonIndex] ==
+                                          pokemon
+                                      ? Colors.blueAccent
+                                      : Colors.grey,
+                                  width: _pokemonList[_selectedPokemonIndex] ==
+                                          pokemon
+                                      ? 5.0
+                                      : 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              child: PokemonCard(pokemon: pokemon)),
+                              child: PokemonCard(
+                                  shortName: pokemon,
+                                  displayName: pokedexViewModel
+                                          .getPokemonByShortName(pokemon)
+                                          ?.name ??
+                                      pokemon)),
                         );
                       },
                     );

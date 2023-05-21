@@ -1,8 +1,7 @@
 import 'package:app/database/database.dart';
 import 'package:app/database/database_loader.dart';
-import 'package:app/view_models/pkm_info_view_model.dart';
 import 'package:app/widgets/app.dart';
-import 'package:app/widgets/common/background_image.dart';
+import 'package:app/widgets/common/loading_screen.dart';
 import 'package:app/widgets/pokemon_starter/pick_starter_pokemon.dart';
 import 'package:app/widgets/start_up/start_up.dart';
 import 'package:flutter/material.dart';
@@ -42,34 +41,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    renderLoadingScreen() {
-      return Stack(children: const [
-        BackgroundImage(),
-        Center(
-          child: Image(
-              image: AssetImage('assets/icons/loading-pikachu.gif'),
-              height: 120),
-        )
-      ]);
-    }
-
     return MaterialApp(
-        home: FutureBuilder(
-            future: pokedexInfo,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                return ChangeNotifierProvider(
-                    create: (context) => PokedexViewModel(),
-                    child: MaterialApp.router(
-                      title: 'Pokemon Battler',
-                      debugShowCheckedModeBanner: false,
-                      theme: ThemeData(
-                        primarySwatch: Colors.red,
-                      ),
-                      routerConfig: router,
-                    ));
-              }
-              return renderLoadingScreen();
-            }));
+        home: ChangeNotifierProvider(
+            create: (context) => PokedexViewModel(database),
+            child: MaterialApp.router(
+              title: 'Pokemon Battler',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                primarySwatch: Colors.red,
+              ),
+              routerConfig: router,
+            )));
   }
 }

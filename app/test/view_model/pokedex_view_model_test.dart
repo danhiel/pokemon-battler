@@ -14,11 +14,11 @@ void main() {
 
       // Given
       await viewModel
-          .insertPokemon(Pokemon(1, 'charmander', 'Charmander', true, true));
+          .insertPokemon(Pokemon('charmander', 'Charmander', true, true));
       await viewModel
-          .insertPokemon(Pokemon(2, 'bulbasaur', 'Bulbasaur', false, true));
+          .insertPokemon(Pokemon('bulbasaur', 'Bulbasaur', false, true));
       await viewModel
-          .insertPokemon(Pokemon(3, 'squirtle', 'Squirtle', false, false));
+          .insertPokemon(Pokemon('squirtle', 'Squirtle', false, false));
     });
 
     tearDownAll(() async {
@@ -63,7 +63,7 @@ void main() {
     test('should set selected pokemon by Pokemon', () async {
       // when
       await viewModel.setSelectedPokemon(
-          pokemon: Pokemon(2, 'squirtle', 'Squirtle', true, false));
+          pokemon: Pokemon('squirtle', 'Squirtle', true, false));
       var actual = await viewModel.selectedPokemon;
 
       // then

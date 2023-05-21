@@ -11,7 +11,6 @@ class PokemonInfoViewModel extends ChangeNotifier {
   PokemonInfoViewModel._();
 
   Future<Map<String, String>> initializePokemonInfo() async {
-    _pokedex = await fetchPokemonInfo();
     _starterPokemons
         .add(await PokemonService.instance.getPokemonDetails('charmander'));
     _starterPokemons
