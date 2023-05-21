@@ -1,5 +1,4 @@
-import 'package:app/model/pokemon_model.dart';
-import 'package:floor/floor.dart';
+import 'package:app/database/pokemon_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:app/database/database.dart';
 import 'package:app/database/pokemon_dao.dart';
@@ -12,33 +11,71 @@ void main() {
     setUp(() async {
       database = await $FloorAppDatabase.inMemoryDatabaseBuilder().build();
       pokemonDao = database.pokemonDao;
+
+      // Given
+      await pokemonDao
+          .insertPokemon(Pokemon(1, true, 'charmander', 'Charmander', true));
+      await pokemonDao
+          .insertPokemon(Pokemon(2, false, 'bulbasaur', 'Bulbasaur', true));
+
+      await pokemonDao
+          .insertPokemon(Pokemon(3, false, 'squirtle', 'Squirtle', false));
     });
 
     tearDown(() async {
       await database.close();
     });
 
-    test('find all pokemon', () async {
-      final pokemon = Pokemon('1', 'Charmander', 'charmander', 'fire', 'water',
-          'a pokemon', 45, 45, 'attack', '', '', ', ', '', false);
-      await pokemonDao.insertPokemon(pokemon);
+    test('Should find all pokemon', () async {
+      // when
+      final actual = await pokemonDao.getAllPokemons();
 
-      final actual = await pokemonDao.getAllPokemon();
-
-      expect(actual[0].id, pokemon.id);
+      // then
+      expect(actual[0].name, 'Charmander');
+      expect(actual[1].name, 'Bulbasaur');
     });
 
-    test('update pokemon', () async {
-      final pokemon = Pokemon('1', 'Charmander', 'charmander', 'fire', 'water',
-          'a pokemon', 45, 45, 'attack', '', '', ', ', '', false);
-      await pokemonDao.insertPokemon(pokemon);
-      final actual = pokemonDao.watchAllPokemons();
+    test('Should update pokemon', () async {
+      // given
+      final updatedPokemon = Pokemon(1, true, 'charmander', 'Chary', false);
 
-      final updatedPokemon = Pokemon('1', 'Charmy', 'charmander', 'fire',
-          'water', 'a pokemon', 45, 45, 'attack', '', '', ', ', '', false);
+      // when
       await pokemonDao.updatePokemon(updatedPokemon);
+      final actual = await pokemonDao.getPokemonById(1);
 
-      expect((await actual.first)[0].name, 'Charmy');
+      expect(actual, isNot(null));
+      expect(actual?.name, 'Chary');
+    });
+
+    test('Should get pokemon by short name', () async {
+      // when
+      final actual = await pokemonDao.getPokemonByShortName('squirtle');
+
+      expect(actual?.name, 'Squirtle');
+    });
+
+    test('Should get all captured pokemon', () async {
+      // when
+      final actual = await pokemonDao.getAllCapturedPokemons();
+
+      expect(actual[0].shortName, 'charmander');
+      expect(actual[1].shortName, 'bulbasaur');
+    });
+
+    test('Should watch all pokemons', () async {
+      // given
+      var calls = 0;
+      var subscription = pokemonDao.watchAllPokemons().listen((pokemons) {
+        calls++;
+      });
+
+      // when
+      await pokemonDao
+          .insertPokemon(Pokemon(4, false, 'pikachu', 'Pikachu', false));
+
+      // then
+      expect(calls, 1);
+      subscription.cancel();
     });
   });
 }

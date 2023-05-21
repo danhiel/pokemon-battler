@@ -1,4 +1,4 @@
-import 'package:app/model/pokemon_details_model.dart';
+import 'package:app/models/pokemon_details_model.dart';
 import 'package:app/services/pokemon_service.dart';
 import 'package:app/utils/config_utils.dart';
 import 'package:flutter/widgets.dart';

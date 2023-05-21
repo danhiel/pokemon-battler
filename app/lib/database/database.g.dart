@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Pokemon` (`shortName` TEXT NOT NULL, `name` TEXT NOT NULL, `isCaptured` INTEGER NOT NULL, PRIMARY KEY (`shortName`))');
+            'CREATE TABLE IF NOT EXISTS `Pokemon` (`id` INTEGER NOT NULL, `selected` INTEGER NOT NULL, `shortName` TEXT NOT NULL, `name` TEXT NOT NULL, `captured` INTEGER NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -108,19 +108,23 @@ class _$PokemonDao extends PokemonDao {
             database,
             'Pokemon',
             (Pokemon item) => <String, Object?>{
+                  'id': item.id,
+                  'selected': item.selected ? 1 : 0,
                   'shortName': item.shortName,
                   'name': item.name,
-                  'isCaptured': item.isCaptured ? 1 : 0
+                  'captured': item.captured ? 1 : 0
                 },
             changeListener),
         _pokemonUpdateAdapter = UpdateAdapter(
             database,
             'Pokemon',
-            ['shortName'],
+            ['id'],
             (Pokemon item) => <String, Object?>{
+                  'id': item.id,
+                  'selected': item.selected ? 1 : 0,
                   'shortName': item.shortName,
                   'name': item.name,
-                  'isCaptured': item.isCaptured ? 1 : 0
+                  'captured': item.captured ? 1 : 0
                 },
             changeListener);
 
@@ -135,19 +139,73 @@ class _$PokemonDao extends PokemonDao {
   final UpdateAdapter<Pokemon> _pokemonUpdateAdapter;
 
   @override
-  Future<List<Pokemon>> getAllPokemon() async {
+  Future<List<Pokemon>> getAllPokemons() async {
     return _queryAdapter.queryList('SELECT * FROM Pokemon',
-        mapper: (Map<String, Object?> row) => Pokemon(row['name'] as String,
-            row['shortName'] as String, (row['isCaptured'] as int) != 0));
+        mapper: (Map<String, Object?> row) => Pokemon(
+            row['id'] as int,
+            (row['selected'] as int) != 0,
+            row['shortName'] as String,
+            row['name'] as String,
+            (row['captured'] as int) != 0));
+  }
+
+  @override
+  Future<List<Pokemon>> getAllCapturedPokemons() async {
+    return _queryAdapter.queryList('SELECT * FROM Pokemon WHERE captured',
+        mapper: (Map<String, Object?> row) => Pokemon(
+            row['id'] as int,
+            (row['selected'] as int) != 0,
+            row['shortName'] as String,
+            row['name'] as String,
+            (row['captured'] as int) != 0));
   }
 
   @override
   Stream<List<Pokemon>> watchAllPokemons() {
     return _queryAdapter.queryListStream('SELECT * FROM Pokemon',
-        mapper: (Map<String, Object?> row) => Pokemon(row['name'] as String,
-            row['shortName'] as String, (row['isCaptured'] as int) != 0),
+        mapper: (Map<String, Object?> row) => Pokemon(
+            row['id'] as int,
+            (row['selected'] as int) != 0,
+            row['shortName'] as String,
+            row['name'] as String,
+            (row['captured'] as int) != 0),
         queryableName: 'Pokemon',
         isView: false);
+  }
+
+  @override
+  Future<Pokemon?> getPokemonByShortName(String shortName) async {
+    return _queryAdapter.query('SELECT * FROM Pokemon WHERE shortName = ?1',
+        mapper: (Map<String, Object?> row) => Pokemon(
+            row['id'] as int,
+            (row['selected'] as int) != 0,
+            row['shortName'] as String,
+            row['name'] as String,
+            (row['captured'] as int) != 0),
+        arguments: [shortName]);
+  }
+
+  @override
+  Future<Pokemon?> getPokemonById(int id) async {
+    return _queryAdapter.query('SELECT * FROM Pokemon WHERE id = ?1',
+        mapper: (Map<String, Object?> row) => Pokemon(
+            row['id'] as int,
+            (row['selected'] as int) != 0,
+            row['shortName'] as String,
+            row['name'] as String,
+            (row['captured'] as int) != 0),
+        arguments: [id]);
+  }
+
+  @override
+  Future<Pokemon?> getSelectedPokemon() async {
+    return _queryAdapter.query('SELECT * FROM Pokemon WHERE selected',
+        mapper: (Map<String, Object?> row) => Pokemon(
+            row['id'] as int,
+            (row['selected'] as int) != 0,
+            row['shortName'] as String,
+            row['name'] as String,
+            (row['captured'] as int) != 0));
   }
 
   @override

@@ -1,5 +1,7 @@
-
+import 'package:app/view_models/pokedex_view_model.dart';
+import 'package:app/widgets/pokemon_starter/pokemon_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -9,8 +11,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final selectedPokemon = PokedexViewModel().selectedPokemon;
+
   @override
   Widget build(BuildContext context) {
+    final pokedexViewModel = context.watch<PokedexViewModel>();
+
     return Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -20,6 +26,8 @@ class _HomeState extends State<Home> {
             fit: BoxFit.cover,
           ),
         ),
-        child: null);
+        child: Column(
+          children: [PokemonCard(pokemon: pokedexViewModel.selectedPokemon!)],
+        ));
   }
 }

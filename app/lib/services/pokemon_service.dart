@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:app/model/battle_info_model.dart';
+import 'package:app/models/battle_info_model.dart';
 import 'package:http/http.dart' as http;
-import '../model/pokemon_details_model.dart';
+import '../models/pokemon_details_model.dart';
 
 class PokemonService {
   static final instance = PokemonService._();

@@ -1,6 +1,6 @@
-import 'package:app/model/pokemon_details_model.dart';
-import 'package:app/view_model/pkm_info_view_model.dart';
-import 'package:app/view_model/pokedex_view_model.dart';
+import 'package:app/models/pokemon_details_model.dart';
+import 'package:app/view_models/pkm_info_view_model.dart';
+import 'package:app/view_models/pokedex_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

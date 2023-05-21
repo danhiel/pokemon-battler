@@ -1,4 +1,4 @@
-import 'package:app/model/pokemon_move_model.dart';
+import 'package:app/models/pokemon_move_model.dart';
 
 class PokemonDetails {
   final int id;

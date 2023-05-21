@@ -1,10 +1,11 @@
-import 'package:app/view_model/pkm_info_view_model.dart';
-import 'package:app/view_model/pokedex_view_model.dart';
+import 'package:app/view_models/pkm_info_view_model.dart';
+import 'package:app/view_models/pokedex_view_model.dart';
 import 'package:app/widgets/pokemon_starter/pokemon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import '../../database/pokemon_entity.dart';
 
 class PickStarterPokemon extends StatefulWidget {
   const PickStarterPokemon({super.key});
@@ -18,12 +19,17 @@ class _PickStarterPokemon extends State<PickStarterPokemon> {
   int _selectedPokemonIndex = 0;
 
   _onSelectPokemon(PokedexViewModel pokedexViewModel) {
+    final selectedPokemon = _pokemonList[_selectedPokemonIndex];
+    final pokemon = Pokemon(
+        selectedPokemon.id, selectedPokemon.shortName, selectedPokemon.name);
+    pokedexViewModel.selectedPokemon = selectedPokemon;
+    pokedexViewModel.insertPokemon(pokemon);
     context.go('/home');
   }
 
   @override
   Widget build(BuildContext context) {
-    final gameEventViewModel = context.watch<PokedexViewModel>();
+    final pokedexViewModel = context.watch<PokedexViewModel>();
 
     return Scaffold(
       body: Stack(
@@ -80,7 +86,7 @@ class _PickStarterPokemon extends State<PickStarterPokemon> {
                 Padding(
                   padding: const EdgeInsets.only(top: 25),
                   child: ElevatedButton(
-                      onPressed: () => _onSelectPokemon(gameEventViewModel),
+                      onPressed: () => _onSelectPokemon(pokedexViewModel),
                       child: const Text("Select Pokemon")),
                 )
               ],

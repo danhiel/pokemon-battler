@@ -1,6 +1,5 @@
 import 'package:app/database/database.dart';
 import 'package:app/database/pokemon_dao.dart';
-import 'package:app/repos/pokemon_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:app/services/pokemon_service.dart';
 

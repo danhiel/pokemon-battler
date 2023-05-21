@@ -1,7 +1,7 @@
 import 'package:app/widgets/pokedex/pokedex.dart';
 import 'package:flutter/material.dart';
 
-import 'home/home.dart';
+import 'battle_home/battle_home.dart';
 
 const List<Widget> _widgetOptions = <Widget>[Home(), Pokedex()];
 
