@@ -1,47 +1,27 @@
-import 'package:app/widgets/pokedex/pokedex.dart';
+import 'package:app/widgets/start_up/start_up.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import '../database/pokemon_entity.dart';
+import '../view_models/pokedex_view_model.dart';
 
-import 'battle_home/battle_home.dart';
-
-const List<Widget> _widgetOptions = <Widget>[Home(), Pokedex()];
-
-class App extends StatefulWidget {
+class App extends StatelessWidget {
   const App({super.key});
 
-  @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  onPressToStart(BuildContext context, Pokemon? selectedPokemon) {
+    if (selectedPokemon != null) {
+      context.go('/home');
+    } else {
+      context.go('/new');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Battle',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Pokedex',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
-    );
+    final pokedexViewModel = context.watch<PokedexViewModel>();
+
+    return StartUp(
+        handlePressToStart: () =>
+            onPressToStart(context, pokedexViewModel.selectedPokemon));
   }
 }
