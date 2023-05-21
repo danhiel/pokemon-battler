@@ -1,6 +1,6 @@
-import 'package:app/models/pokemon_details_model.dart';
 import 'package:app/view_models/pkm_info_view_model.dart';
 import 'package:app/view_models/pokedex_view_model.dart';
+import 'package:app/widgets/pokedex/pokedex_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +29,7 @@ class _PokedexState extends State<Pokedex> {
 
     return DefaultTabController(
         initialIndex: 0,
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: const Text('Pokedex'),
@@ -41,19 +41,12 @@ class _PokedexState extends State<Pokedex> {
                 Tab(
                   child: Text("Captured"),
                 ),
-                Tab(
-                  child: Text("Wild"),
-                ),
               ],
             ),
           ),
           body: TabBarView(
             children: <Widget>[
-              renderPokedexView(
-                  PokemonInfoViewModel.instance.allPokemonSprites),
-              Center(
-                child: Text("ListView of uncaptured Pokemons"),
-              ),
+              PokedexList(),
               Center(
                 child: Text("ListView of captured"),
               ),
