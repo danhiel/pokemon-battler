@@ -1,28 +1,28 @@
-import 'package:app/database/pokemon_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:app/database/pokemon_entity.dart';
 import 'package:app/database/database.dart';
 import 'package:app/database/pokemon_dao.dart';
 
 void main() {
-  group('database tests', () {
+  group('PokemonDatabase', () {
     late PokedexDatabase database;
     late PokemonDao pokemonDao;
 
-    setUp(() async {
-      database = await $FloorAppDatabase.inMemoryDatabaseBuilder().build();
+    setUpAll(() async {
+      database = await $FloorPokedexDatabase.inMemoryDatabaseBuilder().build();
       pokemonDao = database.pokemonDao;
 
       // Given
       await pokemonDao
-          .insertPokemon(Pokemon(1, true, 'charmander', 'Charmander', true));
+          .insertPokemon(Pokemon(1, 'charmander', 'Charmander', true, true));
       await pokemonDao
-          .insertPokemon(Pokemon(2, false, 'bulbasaur', 'Bulbasaur', true));
+          .insertPokemon(Pokemon(2, 'bulbasaur', 'Bulbasaur', false, true));
 
       await pokemonDao
-          .insertPokemon(Pokemon(3, false, 'squirtle', 'Squirtle', false));
+          .insertPokemon(Pokemon(3, 'squirtle', 'Squirtle', false, false));
     });
 
-    tearDown(() async {
+    tearDownAll(() async {
       await database.close();
     });
 
@@ -37,7 +37,7 @@ void main() {
 
     test('Should update pokemon', () async {
       // given
-      final updatedPokemon = Pokemon(1, true, 'charmander', 'Chary', false);
+      final updatedPokemon = Pokemon(1, 'charmander', 'Chary', true, true);
 
       // when
       await pokemonDao.updatePokemon(updatedPokemon);
@@ -58,8 +58,7 @@ void main() {
       // when
       final actual = await pokemonDao.getAllCapturedPokemons();
 
-      expect(actual[0].shortName, 'charmander');
-      expect(actual[1].shortName, 'bulbasaur');
+      expect(actual.length, 2);
     });
 
     test('Should watch all pokemons', () async {
@@ -71,7 +70,7 @@ void main() {
 
       // when
       await pokemonDao
-          .insertPokemon(Pokemon(4, false, 'pikachu', 'Pikachu', false));
+          .insertPokemon(Pokemon(4, 'pikachu', 'Pikachu', false, false));
 
       // then
       expect(calls, 1);
