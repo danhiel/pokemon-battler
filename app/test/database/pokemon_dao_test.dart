@@ -14,12 +14,12 @@ void main() {
 
       // Given
       await pokemonDao
-          .insertPokemon(Pokemon(1, 'charmander', 'Charmander', true, true));
+          .insertPokemon(Pokemon('charmander', 'Charmander', true, true));
       await pokemonDao
-          .insertPokemon(Pokemon(2, 'bulbasaur', 'Bulbasaur', false, true));
+          .insertPokemon(Pokemon('bulbasaur', 'Bulbasaur', false, true));
 
       await pokemonDao
-          .insertPokemon(Pokemon(3, 'squirtle', 'Squirtle', false, false));
+          .insertPokemon(Pokemon('squirtle', 'Squirtle', false, false));
     });
 
     tearDownAll(() async {
@@ -37,11 +37,11 @@ void main() {
 
     test('Should update pokemon', () async {
       // given
-      final updatedPokemon = Pokemon(1, 'charmander', 'Chary', true, true);
+      final updatedPokemon = Pokemon('charmander', 'Chary', true, true);
 
       // when
       await pokemonDao.updatePokemon(updatedPokemon);
-      final actual = await pokemonDao.getPokemonById(1);
+      final actual = await pokemonDao.getPokemonByShortName('charmander');
 
       expect(actual, isNot(null));
       expect(actual?.name, 'Chary');
@@ -70,7 +70,7 @@ void main() {
 
       // when
       await pokemonDao
-          .insertPokemon(Pokemon(4, 'pikachu', 'Pikachu', false, false));
+          .insertPokemon(Pokemon('pikachu', 'Pikachu', false, false));
 
       // then
       expect(calls, 1);

@@ -1,6 +1,6 @@
 import 'package:app/models/pokemon_details_model.dart';
 import 'package:app/services/pokemon_service.dart';
-import 'package:app/utils/config_utils.dart';
+import 'package:app/database/database_loader.dart';
 import 'package:flutter/widgets.dart';
 
 class PokemonInfoViewModel extends ChangeNotifier {

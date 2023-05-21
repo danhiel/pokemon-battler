@@ -15,9 +15,6 @@ abstract class PokemonDao {
   @Query('SELECT * FROM Pokemon WHERE shortName = :shortName')
   Future<Pokemon?> getPokemonByShortName(String shortName);
 
-  @Query('SELECT * FROM Pokemon WHERE id = :id')
-  Future<Pokemon?> getPokemonById(int id);
-
   @Query('SELECT * FROM Pokemon WHERE selected')
   Future<Pokemon?> getSelectedPokemon();
 

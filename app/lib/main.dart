@@ -1,4 +1,5 @@
-import 'package:app/utils/config_utils.dart';
+import 'package:app/database/database.dart';
+import 'package:app/database/database_loader.dart';
 import 'package:app/view_models/pkm_info_view_model.dart';
 import 'package:app/widgets/app.dart';
 import 'package:app/widgets/common/background_image.dart';
@@ -31,15 +32,13 @@ final router = GoRouter(
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  startUpDatabase();
-  runApp(MyApp());
+  runApp(MyApp(database: await loadDatabase()));
 }
 
 class MyApp extends StatelessWidget {
-  final Future<Map<String, String>> pokedexInfo =
-      PokemonInfoViewModel.instance.initializePokemonInfo();
+  final PokedexDatabase database;
 
-  MyApp({super.key});
+  const MyApp({super.key, required this.database});
 
   @override
   Widget build(BuildContext context) {
