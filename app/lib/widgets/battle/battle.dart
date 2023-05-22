@@ -1,12 +1,19 @@
+import 'package:app/services/pokemon_service.dart';
+import 'package:app/view_models/pokedex_view_model.dart';
 import 'package:app/widgets/battle/battle_actions.dart';
 import 'package:app/widgets/battle/battle_bar_info.dart';
+import 'package:app/widgets/battle/battle_sprites.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Battle extends StatelessWidget {
   const Battle({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final pokedexViewModel = context.watch<PokedexViewModel>();
+    final selectedPokemon = pokedexViewModel.selectedPokemon;
+
     return SafeArea(
         child: Container(
             decoration: const BoxDecoration(
@@ -16,22 +23,11 @@ class Battle extends StatelessWidget {
               ),
             ),
             child: Stack(children: [
-              const Positioned(
-                  right: 40.0,
-                  top: 225.0,
-                  child: Image(
-                      image: AssetImage('assets/sprites/charmander.png'),
-                      fit: BoxFit.cover,
-                      height: 150)),
-              Positioned(
-                  left: 175.0,
-                  bottom: 250.0,
-                  child: Transform(
-                      transform: Matrix4.rotationY(3.14),
-                      child: const Image(
-                          image: AssetImage('assets/sprites/charmander.png'),
-                          fit: BoxFit.cover,
-                          height: 150))),
+              const BattleSprites(
+                  spriteImg: 'assets/sprites/charmander.png', isOpponent: true),
+              const BattleSprites(
+                  spriteImg: 'assets/sprites/charmander.png',
+                  isOpponent: false),
               Column(
                 children: [
                   Expanded(

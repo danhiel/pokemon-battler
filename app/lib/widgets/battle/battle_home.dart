@@ -1,5 +1,4 @@
 import 'package:app/view_models/pokedex_view_model.dart';
-import 'package:app/widgets/pokemon_starter/pokemon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +11,7 @@ class StartBattle extends StatefulWidget {
 }
 
 class _StartBattleState extends State<StartBattle> {
-  handleClickBattle() => {context.push('/battle')};
+  handleClickBattle() => context.push('/battle');
 
   @override
   Widget build(BuildContext context) {

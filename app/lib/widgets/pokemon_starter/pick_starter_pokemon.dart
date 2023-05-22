@@ -1,11 +1,9 @@
-import 'package:app/view_models/pkm_info_view_model.dart';
 import 'package:app/view_models/pokedex_view_model.dart';
 import 'package:app/widgets/pokemon_starter/pokemon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '../../database/pokemon_entity.dart';
 
 class PickStarterPokemon extends StatefulWidget {
   const PickStarterPokemon({super.key});

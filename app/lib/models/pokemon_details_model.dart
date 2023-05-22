@@ -5,6 +5,7 @@ class PokemonDetails {
   final String name;
   final String shortName;
   final int hp;
+  final int? currentHp;
   final String type;
   final String weakness;
   final String description;
@@ -26,7 +27,8 @@ class PokemonDetails {
       required this.sprite,
       required this.typeIcon,
       required this.weaknessIcon,
-      required this.moves});
+      required this.moves,
+      this.currentHp});
 
   factory PokemonDetails.fromJson(Map<String, dynamic> json) {
     var newMoves = <Move>[];
@@ -41,6 +43,7 @@ class PokemonDetails {
         name: json['name'],
         shortName: json['shortname'],
         hp: json['hp'],
+        currentHp: json['currentHp'],
         type: json['info']['type'],
         weakness: json['info']['weakness'],
         description: json['info']['description'],
