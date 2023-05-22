@@ -1,9 +1,20 @@
+import 'package:app/models/battle_info_model.dart';
+import 'package:app/models/pokemon_move_model.dart';
 import 'package:app/widgets/battle/battle_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class BattleActions extends StatelessWidget {
-  const BattleActions({super.key});
+  final List<Move> moves;
+  final Function playMove;
+
+  const BattleActions({super.key, required this.moves, required this.playMove});
+
+  handleMoveClick(String move, BuildContext context) async {
+    BattleInfo battleInfo = await playMove(move);
+    print(battleInfo.results);
+    context.pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +29,7 @@ class BattleActions extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   foregroundColor: Colors.black),
-              onPressed: () => context.pop(),
+              onPressed: () => handleMoveClick('flee', context),
               child: const Text('Flee'),
             ),
             const VerticalDivider(

@@ -1,9 +1,12 @@
+import 'package:app/models/pokemon_details_model.dart';
 import 'package:flutter/material.dart';
 
 import 'battle_decoration.dart';
 
 class BattleBarInfo extends StatelessWidget {
-  const BattleBarInfo({super.key});
+  final PokemonDetails pokemonDetails;
+
+  const BattleBarInfo({super.key, required this.pokemonDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -17,50 +20,54 @@ class BattleBarInfo extends StatelessWidget {
         decoration: getBattleDecorations(),
         child: Column(children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Row(children: const [
+            Row(children: [
               Text(
-                'Pikachu',
-                style: TextStyle(
+                pokemonDetails.name,
+                style: const TextStyle(
                     fontSize: 16,
                     color: Colors.black,
                     decoration: TextDecoration.none),
               ),
               Image(
-                image: AssetImage('assets/icons/fire.jpg'),
+                image: AssetImage(pokemonDetails.typeIcon),
                 height: 16,
                 width: 16,
               ),
             ]),
-            Row(
-              children: const [
-                Image(
-                  image: AssetImage('assets/icons/attack-buff.png'),
-                  height: 16,
-                  width: 16,
-                ),
-                Image(
-                  image: AssetImage('assets/icons/attack-buff.png'),
-                  height: 16,
-                  width: 16,
-                )
-              ],
-            )
+            Row(children: [
+              ...List.generate(
+                  pokemonDetails.buffs!.length,
+                  (index) => Image(
+                        image: AssetImage(
+                            'assets/icons/${pokemonDetails.buffs![index]}-buff.png'),
+                        height: 16,
+                        width: 16,
+                      )),
+              ...List.generate(
+                  pokemonDetails.debuffs!.length,
+                  (index) => Image(
+                        image: AssetImage(
+                            'assets/icons/${pokemonDetails.buffs![index]}-debuff.png'),
+                        height: 16,
+                        width: 16,
+                      )),
+            ])
           ]),
           const SizedBox(
             height: 6,
           ),
-          const LinearProgressIndicator(
+          LinearProgressIndicator(
             color: Colors.green,
             minHeight: 8,
-            value: 1.0,
+            value: 1.0 * pokemonDetails.currentHp! / pokemonDetails.hp,
             semanticsLabel: 'Health Bar',
           ),
           const SizedBox(
             height: 4,
           ),
-          const Text(
-            '140 / 160',
-            style: TextStyle(
+          Text(
+            '${pokemonDetails.currentHp} / ${pokemonDetails.hp}',
+            style: const TextStyle(
                 fontSize: 12,
                 color: Colors.black,
                 decoration: TextDecoration.none),

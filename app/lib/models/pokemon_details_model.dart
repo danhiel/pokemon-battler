@@ -13,6 +13,8 @@ class PokemonDetails {
   final String sprite;
   final String typeIcon;
   final String weaknessIcon;
+  final List<String>? buffs;
+  final List<String>? debuffs;
   final List<Move> moves;
 
   const PokemonDetails(
@@ -28,6 +30,8 @@ class PokemonDetails {
       required this.typeIcon,
       required this.weaknessIcon,
       required this.moves,
+      this.buffs,
+      this.debuffs,
       this.currentHp});
 
   factory PokemonDetails.fromJson(Map<String, dynamic> json) {
@@ -43,7 +47,7 @@ class PokemonDetails {
         name: json['name'],
         shortName: json['shortname'],
         hp: json['hp'],
-        currentHp: json['currentHp'],
+        currentHp: json['current-hp'],
         type: json['info']['type'],
         weakness: json['info']['weakness'],
         description: json['info']['description'],
@@ -51,6 +55,8 @@ class PokemonDetails {
         sprite: 'assets/sprites/${json['shortname']}.png',
         typeIcon: 'assets/${json['images']['typeIcon']}',
         weaknessIcon: 'assets/${json['images']['weaknessIcon']}',
-        moves: newMoves);
+        moves: newMoves,
+        buffs: List<String>.from(json['buffs']).toList(),
+        debuffs: List<String>.from(json['debuffs']).toList());
   }
 }
