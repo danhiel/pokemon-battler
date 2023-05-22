@@ -8,10 +8,11 @@ class BattleBarInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.only(
+            bottom: 8.0, right: 8.0, left: 8.0, top: 24.0),
         padding: const EdgeInsets.all(6.0),
         alignment: Alignment.topLeft,
-        height: 80,
+        height: 75,
         width: MediaQuery.of(context).size.width * 0.6,
         decoration: getBattleDecorations(),
         child: Column(children: [
@@ -45,6 +46,25 @@ class BattleBarInfo extends StatelessWidget {
               ],
             )
           ]),
+          const SizedBox(
+            height: 6,
+          ),
+          const LinearProgressIndicator(
+            color: Colors.green,
+            minHeight: 8,
+            value: 1.0,
+            semanticsLabel: 'Health Bar',
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          const Text(
+            '140 / 160',
+            style: TextStyle(
+                fontSize: 12,
+                color: Colors.black,
+                decoration: TextDecoration.none),
+          )
         ]));
   }
 }

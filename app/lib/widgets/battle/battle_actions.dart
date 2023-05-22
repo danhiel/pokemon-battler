@@ -24,6 +24,21 @@ class BattleActions extends StatelessWidget {
             const VerticalDivider(
               color: Colors.black,
             ),
+            Flexible(
+              child: GridView.count(
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  physics: const NeverScrollableScrollPhysics(),
+                  childAspectRatio: 2.5,
+                  children: List.generate(4, (index) {
+                    return Center(
+                      child: Text(
+                        'Item $index',
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                    );
+                  })),
+            )
           ],
         ));
   }
