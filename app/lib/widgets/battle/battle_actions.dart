@@ -19,10 +19,7 @@ class BattleActions extends StatelessWidget {
       required this.isLoading});
 
   handleMoveClick(String move, BuildContext context) async {
-    BattleInfo? battleInfo = await playMove(move);
-    if (battleInfo?.results?.p1Result == 'lost') {
-      context.pop();
-    }
+    await playMove(move);
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:app/view_models/battle_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'battle_actions.dart';
@@ -12,6 +13,11 @@ class BattleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final battleViewModel = context.watch<BattleViewModel>();
+
+    if (battleViewModel.opponent.currentHp! <= 0 ||
+        battleViewModel.user.currentHp! <= 0) {
+      context.pop();
+    }
 
     return Container(
         decoration: const BoxDecoration(
