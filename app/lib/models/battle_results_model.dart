@@ -1,10 +1,10 @@
 import 'package:app/models/pokemon_details_model.dart';
 
 class Results {
-  final String p1Move;
-  final String p2Move;
-  final PokemonDetails p1Result;
-  final PokemonDetails p2Result;
+  final String? p1Move;
+  final String? p2Move;
+  final String? p1Result;
+  final String? p2Result;
 
   Results(
       {required this.p1Move,

@@ -11,8 +11,8 @@ class BattleActions extends StatelessWidget {
   const BattleActions({super.key, required this.moves, required this.playMove});
 
   handleMoveClick(String move, BuildContext context) async {
-    BattleInfo battleInfo = await playMove(move);
-    print(battleInfo.results);
+    BattleInfo? battleInfo = await playMove(move);
+    print(battleInfo?.results);
     context.pop();
   }
 

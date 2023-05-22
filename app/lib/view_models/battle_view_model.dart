@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import '../models/battle_info_model.dart';
 
 class BattleViewModel extends ChangeNotifier {
-  late final BattleInfo battleInfo;
-  late final String guid;
-  late final String pid;
-  late final PokemonDetails user;
-  late final PokemonDetails opponent;
+  late BattleInfo battleInfo;
+  late String guid;
+  late String pid;
+  late PokemonDetails user;
+  late PokemonDetails opponent;
 
   Future<BattleInfo> startBattle(String shortName) async {
     final battleInfo =

@@ -41,7 +41,7 @@ class PokemonService {
     final response = await http.post(
         Uri.parse(
             'https://courses.cs.washington.edu/courses/cse154/webservices/pokedex/game.php'),
-        body: {'guid': guid, 'puid': pid, 'movename': move});
+        body: {'guid': guid, 'pid': pid, 'movename': move});
     if (response.statusCode == 400) {
       throw Exception('Invalid parameters.');
     }
