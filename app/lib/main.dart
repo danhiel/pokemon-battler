@@ -1,7 +1,9 @@
 import 'package:app/database/database.dart';
 import 'package:app/database/database_loader.dart';
 import 'package:app/widgets/app.dart';
+import 'package:app/widgets/battle/battle.dart';
 import 'package:app/widgets/home/home.dart';
+import 'package:app/widgets/pokemon_details/pokemon_details.dart';
 import 'package:app/widgets/pokemon_starter/pick_starter_pokemon.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -21,8 +23,14 @@ final router = GoRouter(
         name: 'newUser',
         builder: (context, _) => const PickStarterPokemon()),
     GoRoute(path: '/home', name: 'home', builder: (context, _) => const Home()),
-    GoRoute(path: '/pokedex', name: 'pokedex', builder: (context, _) => App()),
-    GoRoute(path: '/battle', name: 'battle', builder: (context, _) => App()),
+    GoRoute(
+        path: '/pokemon',
+        name: 'pokemonDetails',
+        builder: (context, _) => const PokemonDetailsScreen()),
+    GoRoute(
+        path: '/battle',
+        name: 'battle',
+        builder: (context, _) => const Battle()),
   ],
 );
 

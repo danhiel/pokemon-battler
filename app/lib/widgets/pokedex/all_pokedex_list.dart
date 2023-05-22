@@ -6,14 +6,15 @@ import 'package:provider/provider.dart';
 class PokedexList extends StatelessWidget {
   const PokedexList({super.key});
 
+  handleSpriteClick() => print('Show pokemon details here');
+
   renderSprite(Pokemon pkm) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: GestureDetector(
-          onTap: () {}, // Image tapped
-          child: pkm.captured
-              ? renderSpriteImage(pkm.shortName)
-              : renderUncapturedSpriteImage(pkm.shortName)),
+      child: pkm.captured
+          ? GestureDetector(
+              onTap: handleSpriteClick, child: renderSpriteImage(pkm.shortName))
+          : renderUncapturedSpriteImage(pkm.shortName),
     );
   }
 

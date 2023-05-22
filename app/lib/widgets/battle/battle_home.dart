@@ -1,6 +1,7 @@
 import 'package:app/view_models/pokedex_view_model.dart';
 import 'package:app/widgets/pokemon_starter/pokemon_card.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class StartBattle extends StatefulWidget {
@@ -11,25 +12,30 @@ class StartBattle extends StatefulWidget {
 }
 
 class _StartBattleState extends State<StartBattle> {
+  handleClickBattle() => {context.push('/battle')};
+
   @override
   Widget build(BuildContext context) {
     final pokedexViewModel = context.watch<PokedexViewModel>();
     var selectedPokemon = pokedexViewModel.selectedPokemon!;
 
     return Container(
-        decoration: BoxDecoration(
+        width: MediaQuery.of(context).size.width,
+        decoration: const BoxDecoration(
           image: DecorationImage(
-            colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.5), BlendMode.dstATop),
-            image: const AssetImage("assets/images/background.png"),
+            image: AssetImage("assets/images/background.png"),
             fit: BoxFit.cover,
           ),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            PokemonCard(
-                shortName: selectedPokemon.shortName,
-                displayName: selectedPokemon.name)
+            ElevatedButton(
+                onPressed: () => handleClickBattle(),
+                child: const Text('Battle')),
+            const SizedBox(height: 150),
+            Image.asset('assets/sprites/${selectedPokemon.shortName}.png',
+                fit: BoxFit.cover, height: 200),
           ],
         ));
   }
