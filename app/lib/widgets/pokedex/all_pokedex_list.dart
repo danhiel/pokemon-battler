@@ -3,18 +3,27 @@ import 'package:app/view_models/pokedex_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../pokemon_details/pokemon_details.dart';
+
 class PokedexList extends StatelessWidget {
   const PokedexList({super.key});
 
-  handleSpriteClick() => print('Show pokemon details here');
+  handleSpriteClick(String name, BuildContext context) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PokemonDetailsScreen(name: name,))
+      );
+  }
 
-  renderSprite(Pokemon pkm) {
+  Widget renderSprite(Pokemon pkm, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: pkm.captured
-          ? GestureDetector(
-              onTap: handleSpriteClick, child: renderSpriteImage(pkm.shortName))
-          : renderUncapturedSpriteImage(pkm.shortName),
+      child: GestureDetector(
+        onTap: () => handleSpriteClick(pkm.shortName, context),
+        child: pkm.captured
+            ? renderSpriteImage(pkm.shortName)
+            : renderUncapturedSpriteImage(pkm.shortName),
+      ),
     );
   }
 
@@ -43,6 +52,6 @@ class PokedexList extends StatelessWidget {
     return GridView.count(
         crossAxisCount: 4,
         children: List.generate(
-            pokemons.length, (index) => renderSprite(pokemons[index])));
+            pokemons.length, (index) => renderSprite(pokemons[index], context)));
   }
 }

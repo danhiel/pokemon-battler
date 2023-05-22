@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../view_models/pokedex_view_model.dart';
@@ -25,7 +26,9 @@ class CapturedPokedexList extends StatelessWidget {
                 trailing: Image(
                     image: AssetImage(
                         'assets/sprites/${pokemons[index].shortName}.png')),
-                onTap: () => {print('todo: add pokemon details')},
+                onTap: () => {
+                  context.pushNamed('pokemonDetails', queryParameters: {'name': pokemons[index].shortName})
+                },
               )));
     } else {
       return const Center(child: Text('No captured pokemons'));

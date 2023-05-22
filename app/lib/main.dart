@@ -26,7 +26,11 @@ final router = GoRouter(
     GoRoute(
         path: '/pokemon',
         name: 'pokemonDetails',
-        builder: (context, _) => const PokemonDetailsScreen()),
+        builder: (BuildContext context, GoRouterState state) {
+          final name = state.queryParameters['name']!;
+          return PokemonDetailsScreen(name: name,);
+        },
+    ),
     GoRoute(
         path: '/battle',
         name: 'battle',
