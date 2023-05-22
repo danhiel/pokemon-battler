@@ -47,8 +47,10 @@ class BattleScreen extends StatelessWidget {
               Expanded(
                   flex: 2,
                   child: BattleActions(
-                      moves: battleViewModel.user.moves,
-                      playMove: battleViewModel.playMove)),
+                    moves: battleViewModel.user.moves,
+                    playMove: battleViewModel.playMove,
+                    isLoading: battleViewModel.isLoading,
+                  )),
             ],
           ),
         ]));

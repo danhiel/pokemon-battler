@@ -9,6 +9,7 @@ class BattleViewModel extends ChangeNotifier {
   late String pid;
   late PokemonDetails user;
   late PokemonDetails opponent;
+  bool _isLoading = false;
 
   Future<BattleInfo> startBattle(String shortName) async {
     final battleInfo =
@@ -24,12 +25,18 @@ class BattleViewModel extends ChangeNotifier {
 
   PokemonDetails get opponentInfo => opponent;
 
-  void playMove(String moveName) async {
+  bool get isLoading => _isLoading;
+
+  Future<BattleInfo> playMove(String moveName) async {
+    _isLoading = true;
+    notifyListeners();
     String move = moveName.replaceAll(' ', '').toLowerCase();
     BattleInfo battleInfo =
         await PokemonService.instance.playMove(guid, pid, move);
     user = battleInfo.p1;
     opponent = battleInfo.p2;
+    _isLoading = false;
     notifyListeners();
+    return battleInfo;
   }
 }

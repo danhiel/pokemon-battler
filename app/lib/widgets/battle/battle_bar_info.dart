@@ -36,7 +36,9 @@ class BattleBarInfo extends StatelessWidget {
             ]),
             Row(children: [
               ...List.generate(
-                  pokemonDetails.buffs!.length,
+                  pokemonDetails.buffs!.length > 5
+                      ? 5
+                      : pokemonDetails.buffs!.length,
                   (index) => Image(
                         image: AssetImage(
                             'assets/icons/${pokemonDetails.buffs![index]}-buff.png'),
@@ -44,10 +46,12 @@ class BattleBarInfo extends StatelessWidget {
                         width: 16,
                       )),
               ...List.generate(
-                  pokemonDetails.debuffs!.length,
+                  pokemonDetails.debuffs!.length > 5
+                      ? 5
+                      : pokemonDetails.debuffs!.length,
                   (index) => Image(
                         image: AssetImage(
-                            'assets/icons/${pokemonDetails.buffs![index]}-debuff.png'),
+                            'assets/icons/${pokemonDetails.debuffs![index]}-debuff.png'),
                         height: 16,
                         width: 16,
                       )),
