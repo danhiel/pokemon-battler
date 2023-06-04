@@ -1,4 +1,5 @@
 import 'package:app/models/pokemon_details_model.dart';
+import 'package:app/widgets/battle/battle_health_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'battle_decoration.dart';
@@ -60,12 +61,9 @@ class BattleBarInfo extends StatelessWidget {
           const SizedBox(
             height: 6,
           ),
-          LinearProgressIndicator(
-            color: Colors.green,
-            minHeight: 8,
-            value: 1.0 * pokemonDetails.currentHp! / pokemonDetails.hp,
-            semanticsLabel: 'Health Bar',
-          ),
+          HealthBar(
+              currentHp: pokemonDetails.currentHp ?? pokemonDetails.hp,
+              maxHp: pokemonDetails.hp),
           const SizedBox(
             height: 4,
           ),
