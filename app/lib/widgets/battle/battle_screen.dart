@@ -14,8 +14,8 @@ class BattleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final battleViewModel = context.watch<BattleViewModel>();
 
-    if (battleViewModel.opponent.currentHp! <= 0 ||
-        battleViewModel.user.currentHp! <= 0) {
+    if (battleViewModel.opponentInfo.currentHp! <= 0 ||
+        battleViewModel.userInfo.currentHp! <= 0) {
       context.pop();
     }
 
@@ -28,9 +28,9 @@ class BattleScreen extends StatelessWidget {
         ),
         child: Stack(children: [
           BattleSprites(
-              spriteImg: battleViewModel.opponent.sprite, isOpponent: true),
+              spriteImg: battleViewModel.opponentInfo.sprite, isOpponent: true),
           BattleSprites(
-              spriteImg: battleViewModel.user.sprite, isOpponent: false),
+              spriteImg: battleViewModel.userInfo.sprite, isOpponent: false),
           Column(
             children: [
               Expanded(
@@ -41,21 +41,22 @@ class BattleScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: BattleBarInfo(
-                            pokemonDetails: battleViewModel.opponent),
+                            pokemonDetails: battleViewModel.opponentInfo),
                       ),
                       Align(
                         alignment: Alignment.topRight,
-                        child:
-                            BattleBarInfo(pokemonDetails: battleViewModel.user),
+                        child: BattleBarInfo(
+                            pokemonDetails: battleViewModel.userInfo),
                       )
                     ],
                   )),
               Expanded(
                   flex: 2,
                   child: BattleActions(
-                    moves: battleViewModel.user.moves,
+                    moves: battleViewModel.userInfo.moves,
                     playMove: battleViewModel.playMove,
                     isLoading: battleViewModel.isLoading,
+                    dialogue: battleViewModel.dialogue,
                   )),
             ],
           ),

@@ -1,29 +1,27 @@
+import 'package:app/models/battle_results_model.dart';
 import 'package:app/models/pokemon_details_model.dart';
 import 'package:app/services/pokemon_service.dart';
 import 'package:flutter/material.dart';
 import '../models/battle_info_model.dart';
 
 class BattleViewModel extends ChangeNotifier {
-  late BattleInfo battleInfo;
-  late String guid;
-  late String pid;
-  late PokemonDetails user;
-  late PokemonDetails opponent;
+  late BattleInfo _battleInfo;
+  late String _dialogue;
   bool _isLoading = false;
 
   Future<BattleInfo> startBattle(String shortName) async {
-    final battleInfo =
-        await PokemonService.instance.startPokemonBattle(shortName);
-    guid = battleInfo.guid;
-    pid = battleInfo.pid;
-    user = battleInfo.p1;
-    opponent = battleInfo.p2;
-    return battleInfo;
+    _battleInfo = await PokemonService.instance.startPokemonBattle(shortName);
+    _dialogue = 'A wild ${_battleInfo.p2.name} has appeared!';
+    return _battleInfo;
   }
 
-  PokemonDetails get userInfo => user;
+  PokemonDetails get userInfo => _battleInfo.p1;
 
-  PokemonDetails get opponentInfo => opponent;
+  PokemonDetails get opponentInfo => _battleInfo.p2;
+
+  Results? get results => _battleInfo.results;
+
+  String get dialogue => _dialogue;
 
   bool get isLoading => _isLoading;
 
@@ -31,12 +29,10 @@ class BattleViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     String move = moveName.replaceAll(' ', '').toLowerCase();
-    BattleInfo battleInfo =
-        await PokemonService.instance.playMove(guid, pid, move);
-    user = battleInfo.p1;
-    opponent = battleInfo.p2;
+    _battleInfo = await PokemonService.instance
+        .playMove(_battleInfo.guid, _battleInfo.pid, move);
     _isLoading = false;
     notifyListeners();
-    return battleInfo;
+    return _battleInfo;
   }
 }
