@@ -37,8 +37,9 @@ class BattleViewModel extends ChangeNotifier {
     String move = moveName.replaceAll(' ', '').toLowerCase();
     _battleInfo = await PokemonService.instance
         .playMove(_battleInfo.guid, _battleInfo.pid, move);
-    await playP1Move();
-    await playP2Move();
+
+    await _playP1Move();
+    await _playP2Move();
 
     _isLoading = false;
     notifyListeners();
@@ -46,37 +47,50 @@ class BattleViewModel extends ChangeNotifier {
     return _battleInfo;
   }
 
-  Future<void> playP1Move() async {
+  Future<void> _playP1Move() async {
     final results = _battleInfo.results!;
-    if (results.p1Move == 'Flee') {
-      _dialogue = '${_p1.name} has ran away.';
-    } else if (results.p1Move != null) {
-      _dialogue = '${_p1.name} used ${results.p1Move}!';
-    } else {
+    if (results.p1Move == 'flee') {
+      await _triggerFlee();
+      return;
+    } else if (results.p1Move == null) {
       return;
     }
+    _dialogue = '${_p1.name} used ${results.p1Move}!';
     notifyListeners();
-    await Future.delayed(const Duration(seconds: 2));
-    _dialogue = '${results.p1Move} ${results.p1Result}.';
-    _p2 = _battleInfo.p2;
 
+    await Future.delayed(const Duration(seconds: 2));
+    _dialogue =
+        '${results.p1Move} ${results.p1Result == 'hit' ? 'landed' : 'missed'}.';
+    _p2 = _battleInfo.p2;
     notifyListeners();
+
     await Future.delayed(const Duration(seconds: 2));
   }
 
-  Future<void> playP2Move() async {
+  Future<void> _triggerFlee() async {
+    _dialogue = '${_p1.name} ran away.';
+    notifyListeners();
+
+    await Future.delayed(const Duration(seconds: 2));
+    _p1 = _battleInfo.p1;
+    _dialogue = '${_p1.name} ${_battleInfo.results!.p1Result}.';
+    notifyListeners();
+  }
+
+  Future<void> _playP2Move() async {
     final results = _battleInfo.results!;
-    if (results.p2Move != null) {
-      _dialogue = '${_p2.name} used ${results.p2Move}!';
-    } else {
+    if (results.p2Move == null) {
       return;
     }
+    _dialogue = '${_p2.name} used ${results.p2Move}!';
     notifyListeners();
-    await Future.delayed(const Duration(seconds: 2));
-    _dialogue = '${results.p2Move} ${results.p2Result}.';
-    _p1 = _battleInfo.p1;
 
+    await Future.delayed(const Duration(seconds: 2));
+    _dialogue =
+        '${results.p2Move} ${results.p2Result == 'hit' ? 'landed' : 'missed'}.';
+    _p1 = _battleInfo.p1;
     notifyListeners();
+
     await Future.delayed(const Duration(seconds: 2));
   }
 }
