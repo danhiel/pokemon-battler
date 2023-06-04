@@ -2,9 +2,8 @@ import 'package:app/models/pokemon_move_model.dart';
 import 'package:app/widgets/battle/battle_decoration.dart';
 import 'package:app/widgets/battle/battle_dialogue.dart';
 import 'package:app/widgets/battle/battle_move.dart';
+import 'package:app/widgets/common/loading_pikachu.dart';
 import 'package:flutter/material.dart';
-
-import '../common/loading_pikachu.dart';
 
 textButtonStyle() {
   return TextButton.styleFrom(
@@ -52,11 +51,11 @@ class _BattleActionsState extends State<BattleActions> {
   Widget build(BuildContext context) {
     return Container(
         decoration: getBattleDecorations(),
-        child: widget.isLoading
-            ? const LoadingPikachu()
-            : Row(
-                children: [
-                  Column(
+        child: Row(
+          children: [
+            widget.isLoading
+                ? const LoadingPikachu()
+                : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -73,27 +72,25 @@ class _BattleActionsState extends State<BattleActions> {
                       ),
                     ],
                   ),
-                  const VerticalDivider(
-                    color: Colors.black,
-                  ),
-                  !showDialogue
-                      ? Flexible(
-                          child: GridView.count(
-                              shrinkWrap: true,
-                              crossAxisCount: 2,
-                              physics: const NeverScrollableScrollPhysics(),
-                              childAspectRatio: 2.5,
-                              children:
-                                  List.generate(widget.moves.length, (index) {
-                                return GestureDetector(
-                                    onTap: () => handleClickMove(
-                                        widget.moves[index].name, context),
-                                    child:
-                                        BattleMove(move: widget.moves[index]));
-                              })),
-                        )
-                      : BattleDialogue(dialogue: widget.dialogue)
-                ],
-              ));
+            const VerticalDivider(
+              color: Colors.black,
+            ),
+            !showDialogue
+                ? Flexible(
+                    child: GridView.count(
+                        shrinkWrap: true,
+                        crossAxisCount: 2,
+                        physics: const NeverScrollableScrollPhysics(),
+                        childAspectRatio: 2.5,
+                        children: List.generate(widget.moves.length, (index) {
+                          return GestureDetector(
+                              onTap: () => handleClickMove(
+                                  widget.moves[index].name, context),
+                              child: BattleMove(move: widget.moves[index]));
+                        })),
+                  )
+                : BattleDialogue(dialogue: widget.dialogue)
+          ],
+        ));
   }
 }

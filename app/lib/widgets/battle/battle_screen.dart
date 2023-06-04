@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../common/loading_pikachu.dart';
 import 'battle_actions.dart';
 import 'battle_bar_info.dart';
 import 'battle_sprites.dart';
