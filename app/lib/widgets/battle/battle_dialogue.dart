@@ -12,19 +12,21 @@ class BattleDialogue extends StatelessWidget {
         flex: 1,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: AnimatedTextKit(
-              key: ValueKey<String>(dialogue),
-              isRepeatingAnimation: false,
-              animatedTexts: [
-                TypewriterAnimatedText(dialogue,
-                    curve: Curves.easeIn,
-                    speed: const Duration(milliseconds: 40),
-                    textAlign: TextAlign.center,
-                    textStyle: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        decoration: TextDecoration.none))
-              ]),
+          child: dialogue.isEmpty
+              ? null
+              : AnimatedTextKit(
+                  key: ValueKey<String>(dialogue),
+                  isRepeatingAnimation: false,
+                  animatedTexts: [
+                      TypewriterAnimatedText(dialogue,
+                          curve: Curves.easeIn,
+                          speed: const Duration(milliseconds: 40),
+                          textAlign: TextAlign.center,
+                          textStyle: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              decoration: TextDecoration.none))
+                    ]),
         ));
   }
 }
