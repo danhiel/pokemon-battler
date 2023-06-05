@@ -32,7 +32,7 @@ class StartUp extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontWeight: FontWeight.w900,
-                          fontSize: 36,
+                          fontSize: 24,
                           color: Colors.black,
                           decoration: TextDecoration.none),
                     ),
