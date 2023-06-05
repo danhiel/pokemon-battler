@@ -56,7 +56,7 @@ class PokemonDetails {
         typeIcon: 'assets/${json['images']['typeIcon']}',
         weaknessIcon: 'assets/${json['images']['weaknessIcon']}',
         moves: newMoves,
-        buffs: List<String>.from(json['buffs']).toList(),
-        debuffs: List<String>.from(json['debuffs']).toList());
+        buffs: List<String>.from(json['buffs'] ?? []).toList(),
+        debuffs: List<String>.from(json['debuffs'] ?? []).toList());
   }
 }
