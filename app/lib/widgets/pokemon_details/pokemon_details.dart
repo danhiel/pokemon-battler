@@ -1,7 +1,9 @@
 import 'package:app/services/pokemon_service.dart';
+import 'package:app/view_models/pokedex_view_model.dart';
 import 'package:app/widgets/common/loading_screen.dart';
 import 'package:app/widgets/pokemon_details/pokemon_details_info.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PokemonDetailsScreen extends StatelessWidget {
   final String name;
@@ -10,6 +12,7 @@ class PokemonDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PokemonService service = PokemonService.instance;
+
     return FutureBuilder(
         future: service.getPokemonDetails(name),
         builder: (context, snapshot) {

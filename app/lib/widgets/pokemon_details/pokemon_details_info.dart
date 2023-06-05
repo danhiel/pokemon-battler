@@ -1,97 +1,77 @@
 import 'package:app/models/pokemon_details_model.dart';
 import 'package:app/widgets/pokemon_details/pokemon_detail_moves.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app/widgets/pokemon_details/pokemon_details_header.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../models/pokemon_move_model.dart';
+import '../../view_models/pokedex_view_model.dart';
 
 class PokemonDetailInfoScreen extends StatelessWidget {
   final PokemonDetails pokemon;
+
   const PokemonDetailInfoScreen({super.key, required this.pokemon});
+
   @override
   Widget build(BuildContext context) {
+    final pokedexViewModel = context.watch<PokedexViewModel>();
+
     return Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(10),
         alignment: Alignment.center,
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                    pokemon.name,
-                    style: const TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold
-                    )
-                ),
-              ),
+              PokemonDetailsHeader(pokemon: pokemon),
+              const Divider(height: 12),
               Container(
                 padding: const EdgeInsets.all(10),
                 child: Image.asset(
                   'assets/images/${pokemon.shortName}.jpg',
                 ),
               ),
-              Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      const Text('Description: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                      const SizedBox(width: 8,),
-                      Expanded(
-                        child: Text(pokemon.description, style: const TextStyle(fontSize: 16),),
-                      ),
-                    ],
-                  )
-              ),
-              Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      const Text('Short Name: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                      const SizedBox(width: 8,),
-                      Text(pokemon.shortName, style: const TextStyle(fontSize: 16),),
-                    ],
-                  )
-              ),
-              Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      const Text('Type: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                      const SizedBox(width: 8,),
-                      Text(pokemon.type, style: const TextStyle(fontSize: 16),),
-                      const SizedBox(width: 50,),
-                      const Text('HP: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                      const SizedBox(width: 8,),
-                      Text(pokemon.hp.toString(), style: const TextStyle(fontSize: 16),),
-                    ],
-                  )
-              ),
-              Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      const Text('Weakness: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                      const SizedBox(width: 10,),
-                      Image.asset(pokemon.weaknessIcon),
-                    ],
-                  )
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Moves: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                    const SizedBox(height: 10,),
-                    PokemonDetailMovesScreen(moves: pokemon.moves,)
-                  ],
+              const Divider(height: 12),
+              ListTile(
+                  contentPadding: const EdgeInsets.all(16),
+                  title: const Text(
+                    'Description',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  subtitle: Text(pokemon.description,
+                      style: const TextStyle(fontSize: 16))),
+              const Divider(height: 12),
+              ElevatedButton(
+                  onPressed: pokedexViewModel.selectedPokemon!.shortName ==
+                          pokemon.shortName
+                      ? null
+                      : () async {
+                          await pokedexViewModel.setSelectedPokemon(
+                              shortName: pokemon.shortName);
+                        },
+                  child: const Text('Selected Pokemon')),
+              const Divider(height: 12),
+              ListTile(
+                contentPadding: const EdgeInsets.all(16),
+                title: const Text(
+                  'Weakesss',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
+                subtitle: Text(
+                    '${pokemon.name} is weak to ${pokemon.weakness}!',
+                    style: const TextStyle(fontSize: 16)),
+                trailing: Image(
+                    image: AssetImage(
+                      pokemon.weaknessIcon,
+                    ),
+                    height: 32,
+                    width: 32,
+                    fit: BoxFit.contain),
               ),
+              const Divider(height: 12),
+              PokemonDetailMovesScreen(moves: pokemon.moves),
             ],
           ),
-        )
-    );
+        ));
   }
 }
