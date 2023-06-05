@@ -14,6 +14,8 @@ class PokemonDetailInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pokedexViewModel = context.watch<PokedexViewModel>();
+    var captured =
+        pokedexViewModel.getPokemonByShortName(pokemon.shortName)!.captured;
 
     return Container(
         color: Colors.white,
@@ -41,15 +43,31 @@ class PokemonDetailInfoScreen extends StatelessWidget {
                   subtitle: Text(pokemon.description,
                       style: const TextStyle(fontSize: 16))),
               const Divider(height: 12),
-              ElevatedButton(
-                  onPressed: pokedexViewModel.selectedPokemon!.shortName ==
-                          pokemon.shortName
-                      ? null
-                      : () async {
-                          await pokedexViewModel.setSelectedPokemon(
-                              shortName: pokemon.shortName);
-                        },
-                  child: const Text('Selected Pokemon')),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                      onPressed: pokedexViewModel.selectedPokemon!.shortName ==
+                                  pokemon.shortName ||
+                              !captured
+                          ? null
+                          : () async {
+                              await pokedexViewModel.setSelectedPokemon(
+                                  shortName: pokemon.shortName);
+                            },
+                      child: const Text('Select Pokemon')),
+                  ElevatedButton(
+                    onPressed: !captured
+                        ? null
+                        : () async {
+                            await pokedexViewModel.setCapturedPokemon(
+                                isCaptured: false,
+                                shortName: pokemon.shortName);
+                          },
+                    child: const Text('Release Pokemon'),
+                  ),
+                ],
+              ),
               const Divider(height: 12),
               ListTile(
                 contentPadding: const EdgeInsets.all(16),
