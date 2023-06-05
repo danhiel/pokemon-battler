@@ -29,22 +29,19 @@ class BattleViewModel extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  Future<BattleInfo> playMove(String moveName) async {
+  bool get gameOver => _p1.currentHp! <= 0 || _p2.currentHp! <= 0;
+
+  Future<void> playMove(String moveName) async {
     _isLoading = true;
     _dialogue = '';
     notifyListeners();
-
     String move = moveName.replaceAll(' ', '').toLowerCase();
     _battleInfo = await PokemonService.instance
         .playMove(_battleInfo.guid, _battleInfo.pid, move);
-
     await _playP1Move();
     await _playP2Move();
-
     _isLoading = false;
     notifyListeners();
-
-    return _battleInfo;
   }
 
   Future<void> _playP1Move() async {
@@ -65,6 +62,9 @@ class BattleViewModel extends ChangeNotifier {
     notifyListeners();
 
     await Future.delayed(const Duration(seconds: 2));
+    if (_battleInfo.results!.p2Result == null) {
+      _dialogue = '${_p2.name} fainted.';
+    }
   }
 
   Future<void> _triggerFlee() async {
@@ -92,5 +92,8 @@ class BattleViewModel extends ChangeNotifier {
     notifyListeners();
 
     await Future.delayed(const Duration(seconds: 2));
+    if (_battleInfo.results!.p1Result == null) {
+      _dialogue = '${_p1.name} fainted.';
+    }
   }
 }

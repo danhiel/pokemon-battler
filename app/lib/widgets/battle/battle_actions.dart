@@ -19,13 +19,15 @@ class BattleActions extends StatefulWidget {
   final List<Move> moves;
   final Function playMove;
   final String dialogue;
+  final bool gameOver;
 
   const BattleActions(
       {super.key,
       required this.moves,
       required this.playMove,
       required this.isLoading,
-      required this.dialogue});
+      required this.dialogue,
+      required this.gameOver});
 
   @override
   State<BattleActions> createState() => _BattleActionsState();
@@ -61,13 +63,16 @@ class _BattleActionsState extends State<BattleActions> {
                     children: [
                       TextButton(
                         style: textButtonStyle(),
-                        onPressed: () => handleClickFight(),
+                        onPressed:
+                            widget.gameOver ? null : () => handleClickFight(),
                         child: const Text('Fight'),
                       ),
                       const Divider(),
                       TextButton(
                         style: textButtonStyle(),
-                        onPressed: () => handleClickMove('flee', context),
+                        onPressed: widget.gameOver
+                            ? null
+                            : () => handleClickMove('flee', context),
                         child: const Text('Flee'),
                       ),
                     ],

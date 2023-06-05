@@ -13,9 +13,8 @@ class BattleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final battleViewModel = context.watch<BattleViewModel>();
 
-    if (battleViewModel.opponentInfo.currentHp! <= 0 ||
-        battleViewModel.userInfo.currentHp! <= 0) {
-      context.pop();
+    if (battleViewModel.gameOver) {
+      Future.delayed(const Duration(seconds: 2));
     }
 
     return Container(
@@ -59,11 +58,11 @@ class BattleScreen extends StatelessWidget {
               Expanded(
                   flex: 2,
                   child: BattleActions(
-                    moves: battleViewModel.userInfo.moves,
-                    playMove: battleViewModel.playMove,
-                    isLoading: battleViewModel.isLoading,
-                    dialogue: battleViewModel.dialogue,
-                  )),
+                      moves: battleViewModel.userInfo.moves,
+                      playMove: battleViewModel.playMove,
+                      isLoading: battleViewModel.isLoading,
+                      dialogue: battleViewModel.dialogue,
+                      gameOver: battleViewModel.gameOver)),
             ],
           ),
         ]));

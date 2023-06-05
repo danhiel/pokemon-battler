@@ -21,7 +21,7 @@ class BattleSpritesState extends State<BattleSprites> {
   double movement = 0;
 
   _calculateMovement() {
-    if (widget.dialogue.startsWith(widget.pokemon)) {
+    if (widget.dialogue.startsWith('${widget.pokemon} used')) {
       setState(() {
         movement = 40;
       });
