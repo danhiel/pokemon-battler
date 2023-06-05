@@ -12,6 +12,8 @@ class StartBattle extends StatefulWidget {
 
 class _StartBattleState extends State<StartBattle> {
   handleClickBattle() => context.push('/battle');
+  handleClickViewDetails(String name) =>
+      context.pushNamed('pokemonDetails', queryParameters: {'name': name});
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +29,36 @@ class _StartBattleState extends State<StartBattle> {
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ElevatedButton(
-                onPressed: () => handleClickBattle(),
-                child: const Text('Battle')),
+            SafeArea(
+                child: Container(
+              margin: const EdgeInsets.only(top: 200, left: 32, right: 32),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.red,
+                    blurRadius: 12,
+                    offset: Offset(2, 2), // Shadow position
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                      onPressed: () => handleClickBattle(),
+                      child: const Text('Battle')),
+                  ElevatedButton(
+                      onPressed: () =>
+                          handleClickViewDetails(selectedPokemon.shortName),
+                      child: Text('View ${selectedPokemon.name} Details')),
+                ],
+              ),
+            )),
             const SizedBox(height: 150),
             Image.asset('assets/sprites/${selectedPokemon.shortName}.png',
                 fit: BoxFit.cover, height: 200),
