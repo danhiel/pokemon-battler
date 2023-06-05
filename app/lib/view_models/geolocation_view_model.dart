@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 
 class GeolocationViewModel extends ChangeNotifier {
   double _distanceInMeters = 0;
+  double _totalDistance = 0;
 
   GeolocationViewModel() {
     _initGeolocation();
@@ -40,12 +41,11 @@ class GeolocationViewModel extends ChangeNotifier {
     Geolocator.getPositionStream(locationSettings: locationSettings)
         .listen((Position? position) async {
       if (oldPosition != null && position != null) {
+        final dist = Geolocator.distanceBetween(position.latitude,
+            position.longitude, oldPosition!.latitude, oldPosition!.longitude);
+        _totalDistance += dist;
         if (_distanceInMeters < 150) {
-          _distanceInMeters += Geolocator.distanceBetween(
-              position.latitude,
-              position.longitude,
-              oldPosition!.latitude,
-              oldPosition!.longitude);
+          _distanceInMeters += dist;
         } else {
           _distanceInMeters = 150;
         }
@@ -56,6 +56,8 @@ class GeolocationViewModel extends ChangeNotifier {
   }
 
   double get distance => double.parse((_distanceInMeters).toStringAsFixed(1));
+
+  double get totalDistance => double.parse((_totalDistance).toStringAsFixed(1));
 
   void resetDistance() {
     _distanceInMeters = 0;

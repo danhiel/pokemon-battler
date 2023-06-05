@@ -1,8 +1,13 @@
 import 'package:app/widgets/battle/battle_home.dart';
 import 'package:app/widgets/pokedex/pokedex.dart';
+import 'package:app/widgets/profile/profile.dart';
 import 'package:flutter/material.dart';
 
-const List<Widget> _widgetOptions = <Widget>[StartBattle(), Pokedex()];
+const List<Widget> _widgetOptions = <Widget>[
+  StartBattle(),
+  Pokedex(),
+  Profile()
+];
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -35,6 +40,10 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
             label: 'Pokedex',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,

@@ -49,6 +49,9 @@ class PokedexViewModel extends ChangeNotifier {
     var newPokemon = _getPokemonToUpdate(pokemon, shortName);
 
     newPokemon.captured = isCaptured;
+    if (isCaptured == false) {
+      newPokemon.selected = false;
+    }
     await _database.pokemonDao.updatePokemon(newPokemon);
   }
 
@@ -61,5 +64,12 @@ class PokedexViewModel extends ChangeNotifier {
       throw "Atleast one parameter required";
     }
     return pokemon ?? _pokedex.firstWhere((pkm) => pkm.shortName == shortName);
+  }
+
+  Future<void> reset() async {
+    for (var pokemon in _pokedex) {
+      await setCapturedPokemon(isCaptured: false, shortName: pokemon.shortName);
+    }
+    _selectedPokemon = null;
   }
 }
