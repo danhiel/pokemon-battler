@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../models/pokemon_details_model.dart';
 
 class PokemonService {
-  static final instance = PokemonService._();
+  static late final instance = PokemonService._();
 
   PokemonService._();
 

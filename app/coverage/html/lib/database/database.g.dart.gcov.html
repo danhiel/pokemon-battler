@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-06-04 19:08:40</td>
+            <td class="headerValue">2023-06-04 23:15:22</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -78,12 +78,12 @@
 <a name="16"><span class="lineNum">      16 </span>            :   /// Creates a database builder for an in memory database.</a>
 <a name="17"><span class="lineNum">      17 </span>            :   /// Information stored in an in memory database disappears when the process is killed.</a>
 <a name="18"><span class="lineNum">      18 </span>            :   /// Once a database is built, you should keep a reference to it and re-use it.</a>
-<a name="19"><span class="lineNum">      19 </span><span class="lineCov">          4 :   static _$PokedexDatabaseBuilder inMemoryDatabaseBuilder() =&gt;</span></a>
-<a name="20"><span class="lineNum">      20 </span><span class="lineCov">          4 :       _$PokedexDatabaseBuilder(null);</span></a>
+<a name="19"><span class="lineNum">      19 </span><span class="lineCov">          5 :   static _$PokedexDatabaseBuilder inMemoryDatabaseBuilder() =&gt;</span></a>
+<a name="20"><span class="lineNum">      20 </span><span class="lineCov">          5 :       _$PokedexDatabaseBuilder(null);</span></a>
 <a name="21"><span class="lineNum">      21 </span>            : }</a>
 <a name="22"><span class="lineNum">      22 </span>            : </a>
 <a name="23"><span class="lineNum">      23 </span>            : class _$PokedexDatabaseBuilder {</a>
-<a name="24"><span class="lineNum">      24 </span><span class="lineCov">          4 :   _$PokedexDatabaseBuilder(this.name);</span></a>
+<a name="24"><span class="lineNum">      24 </span><span class="lineCov">          5 :   _$PokedexDatabaseBuilder(this.name);</span></a>
 <a name="25"><span class="lineNum">      25 </span>            : </a>
 <a name="26"><span class="lineNum">      26 </span>            :   final String? name;</a>
 <a name="27"><span class="lineNum">      27 </span>            : </a>
@@ -104,39 +104,39 @@
 <a name="42"><span class="lineNum">      42 </span>            :   }</a>
 <a name="43"><span class="lineNum">      43 </span>            : </a>
 <a name="44"><span class="lineNum">      44 </span>            :   /// Creates the database and initializes it.</a>
-<a name="45"><span class="lineNum">      45 </span><span class="lineCov">          4 :   Future&lt;PokedexDatabase&gt; build() async {</span></a>
-<a name="46"><span class="lineNum">      46 </span><span class="lineCov">          4 :     final path = name != null</span></a>
+<a name="45"><span class="lineNum">      45 </span><span class="lineCov">          5 :   Future&lt;PokedexDatabase&gt; build() async {</span></a>
+<a name="46"><span class="lineNum">      46 </span><span class="lineCov">          5 :     final path = name != null</span></a>
 <a name="47"><span class="lineNum">      47 </span><span class="lineNoCov">          0 :         ? await sqfliteDatabaseFactory.getDatabasePath(name!)</span></a>
 <a name="48"><span class="lineNum">      48 </span>            :         : ':memory:';</a>
-<a name="49"><span class="lineNum">      49 </span><span class="lineCov">          4 :     final database = _$PokedexDatabase();</span></a>
-<a name="50"><span class="lineNum">      50 </span><span class="lineCov">          8 :     database.database = await database.open(</span></a>
+<a name="49"><span class="lineNum">      49 </span><span class="lineCov">          5 :     final database = _$PokedexDatabase();</span></a>
+<a name="50"><span class="lineNum">      50 </span><span class="lineCov">         10 :     database.database = await database.open(</span></a>
 <a name="51"><span class="lineNum">      51 </span>            :       path,</a>
-<a name="52"><span class="lineNum">      52 </span><span class="lineCov">          4 :       _migrations,</span></a>
-<a name="53"><span class="lineNum">      53 </span><span class="lineCov">          4 :       _callback,</span></a>
+<a name="52"><span class="lineNum">      52 </span><span class="lineCov">          5 :       _migrations,</span></a>
+<a name="53"><span class="lineNum">      53 </span><span class="lineCov">          5 :       _callback,</span></a>
 <a name="54"><span class="lineNum">      54 </span>            :     );</a>
 <a name="55"><span class="lineNum">      55 </span>            :     return database;</a>
 <a name="56"><span class="lineNum">      56 </span>            :   }</a>
 <a name="57"><span class="lineNum">      57 </span>            : }</a>
 <a name="58"><span class="lineNum">      58 </span>            : </a>
 <a name="59"><span class="lineNum">      59 </span>            : class _$PokedexDatabase extends PokedexDatabase {</a>
-<a name="60"><span class="lineNum">      60 </span><span class="lineCov">          4 :   _$PokedexDatabase([StreamController&lt;String&gt;? listener]) {</span></a>
-<a name="61"><span class="lineNum">      61 </span><span class="lineCov">          8 :     changeListener = listener ?? StreamController&lt;String&gt;.broadcast();</span></a>
+<a name="60"><span class="lineNum">      60 </span><span class="lineCov">          5 :   _$PokedexDatabase([StreamController&lt;String&gt;? listener]) {</span></a>
+<a name="61"><span class="lineNum">      61 </span><span class="lineCov">         10 :     changeListener = listener ?? StreamController&lt;String&gt;.broadcast();</span></a>
 <a name="62"><span class="lineNum">      62 </span>            :   }</a>
 <a name="63"><span class="lineNum">      63 </span>            : </a>
 <a name="64"><span class="lineNum">      64 </span>            :   PokemonDao? _pokemonDaoInstance;</a>
 <a name="65"><span class="lineNum">      65 </span>            : </a>
-<a name="66"><span class="lineNum">      66 </span><span class="lineCov">          4 :   Future&lt;sqflite.Database&gt; open(</span></a>
+<a name="66"><span class="lineNum">      66 </span><span class="lineCov">          5 :   Future&lt;sqflite.Database&gt; open(</span></a>
 <a name="67"><span class="lineNum">      67 </span>            :     String path,</a>
 <a name="68"><span class="lineNum">      68 </span>            :     List&lt;Migration&gt; migrations, [</a>
 <a name="69"><span class="lineNum">      69 </span>            :     Callback? callback,</a>
 <a name="70"><span class="lineNum">      70 </span>            :   ]) async {</a>
-<a name="71"><span class="lineNum">      71 </span><span class="lineCov">          4 :     final databaseOptions = sqflite.OpenDatabaseOptions(</span></a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineCov">          5 :     final databaseOptions = sqflite.OpenDatabaseOptions(</span></a>
 <a name="72"><span class="lineNum">      72 </span>            :       version: 1,</a>
-<a name="73"><span class="lineNum">      73 </span><span class="lineCov">          4 :       onConfigure: (database) async {</span></a>
-<a name="74"><span class="lineNum">      74 </span><span class="lineCov">          4 :         await database.execute('PRAGMA foreign_keys = ON');</span></a>
+<a name="73"><span class="lineNum">      73 </span><span class="lineCov">          5 :       onConfigure: (database) async {</span></a>
+<a name="74"><span class="lineNum">      74 </span><span class="lineCov">          5 :         await database.execute('PRAGMA foreign_keys = ON');</span></a>
 <a name="75"><span class="lineNum">      75 </span><span class="lineCov">          1 :         await callback?.onConfigure?.call(database);</span></a>
 <a name="76"><span class="lineNum">      76 </span>            :       },</a>
-<a name="77"><span class="lineNum">      77 </span><span class="lineCov">          4 :       onOpen: (database) async {</span></a>
+<a name="77"><span class="lineNum">      77 </span><span class="lineCov">          5 :       onOpen: (database) async {</span></a>
 <a name="78"><span class="lineNum">      78 </span><span class="lineCov">          1 :         await callback?.onOpen?.call(database);</span></a>
 <a name="79"><span class="lineNum">      79 </span>            :       },</a>
 <a name="80"><span class="lineNum">      80 </span><span class="lineNoCov">          0 :       onUpgrade: (database, startVersion, endVersion) async {</span></a>
@@ -145,41 +145,41 @@
 <a name="83"><span class="lineNum">      83 </span>            : </a>
 <a name="84"><span class="lineNum">      84 </span><span class="lineNoCov">          0 :         await callback?.onUpgrade?.call(database, startVersion, endVersion);</span></a>
 <a name="85"><span class="lineNum">      85 </span>            :       },</a>
-<a name="86"><span class="lineNum">      86 </span><span class="lineCov">          4 :       onCreate: (database, version) async {</span></a>
-<a name="87"><span class="lineNum">      87 </span><span class="lineCov">          4 :         await database.execute(</span></a>
+<a name="86"><span class="lineNum">      86 </span><span class="lineCov">          5 :       onCreate: (database, version) async {</span></a>
+<a name="87"><span class="lineNum">      87 </span><span class="lineCov">          5 :         await database.execute(</span></a>
 <a name="88"><span class="lineNum">      88 </span>            :             'CREATE TABLE IF NOT EXISTS `Pokemon` (`shortName` TEXT NOT NULL, `name` TEXT NOT NULL, `selected` INTEGER NOT NULL, `captured` INTEGER NOT NULL, PRIMARY KEY (`shortName`))');</a>
 <a name="89"><span class="lineNum">      89 </span>            : </a>
 <a name="90"><span class="lineNum">      90 </span><span class="lineCov">          2 :         await callback?.onCreate?.call(database, version);</span></a>
 <a name="91"><span class="lineNum">      91 </span>            :       },</a>
 <a name="92"><span class="lineNum">      92 </span>            :     );</a>
-<a name="93"><span class="lineNum">      93 </span><span class="lineCov">          8 :     return sqfliteDatabaseFactory.openDatabase(path, options: databaseOptions);</span></a>
+<a name="93"><span class="lineNum">      93 </span><span class="lineCov">         10 :     return sqfliteDatabaseFactory.openDatabase(path, options: databaseOptions);</span></a>
 <a name="94"><span class="lineNum">      94 </span>            :   }</a>
 <a name="95"><span class="lineNum">      95 </span>            : </a>
-<a name="96"><span class="lineNum">      96 </span><span class="lineCov">          4 :   @override</span></a>
+<a name="96"><span class="lineNum">      96 </span><span class="lineCov">          5 :   @override</span></a>
 <a name="97"><span class="lineNum">      97 </span>            :   PokemonDao get pokemonDao {</a>
-<a name="98"><span class="lineNum">      98 </span><span class="lineCov">         16 :     return _pokemonDaoInstance ??= _$PokemonDao(database, changeListener);</span></a>
+<a name="98"><span class="lineNum">      98 </span><span class="lineCov">         20 :     return _pokemonDaoInstance ??= _$PokemonDao(database, changeListener);</span></a>
 <a name="99"><span class="lineNum">      99 </span>            :   }</a>
 <a name="100"><span class="lineNum">     100 </span>            : }</a>
 <a name="101"><span class="lineNum">     101 </span>            : </a>
 <a name="102"><span class="lineNum">     102 </span>            : class _$PokemonDao extends PokemonDao {</a>
-<a name="103"><span class="lineNum">     103 </span><span class="lineCov">          4 :   _$PokemonDao(</span></a>
+<a name="103"><span class="lineNum">     103 </span><span class="lineCov">          5 :   _$PokemonDao(</span></a>
 <a name="104"><span class="lineNum">     104 </span>            :     this.database,</a>
 <a name="105"><span class="lineNum">     105 </span>            :     this.changeListener,</a>
-<a name="106"><span class="lineNum">     106 </span><span class="lineCov">          4 :   )   : _queryAdapter = QueryAdapter(database, changeListener),</span></a>
-<a name="107"><span class="lineNum">     107 </span><span class="lineCov">          4 :         _pokemonInsertionAdapter = InsertionAdapter(</span></a>
+<a name="106"><span class="lineNum">     106 </span><span class="lineCov">          5 :   )   : _queryAdapter = QueryAdapter(database, changeListener),</span></a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineCov">          5 :         _pokemonInsertionAdapter = InsertionAdapter(</span></a>
 <a name="108"><span class="lineNum">     108 </span>            :             database,</a>
 <a name="109"><span class="lineNum">     109 </span>            :             'Pokemon',</a>
-<a name="110"><span class="lineNum">     110 </span><span class="lineCov">          6 :             (Pokemon item) =&gt; &lt;String, Object?&gt;{</span></a>
-<a name="111"><span class="lineNum">     111 </span><span class="lineCov">          3 :                   'shortName': item.shortName,</span></a>
-<a name="112"><span class="lineNum">     112 </span><span class="lineCov">          3 :                   'name': item.name,</span></a>
-<a name="113"><span class="lineNum">     113 </span><span class="lineCov">          3 :                   'selected': item.selected ? 1 : 0,</span></a>
-<a name="114"><span class="lineNum">     114 </span><span class="lineCov">          3 :                   'captured': item.captured ? 1 : 0</span></a>
+<a name="110"><span class="lineNum">     110 </span><span class="lineCov">          8 :             (Pokemon item) =&gt; &lt;String, Object?&gt;{</span></a>
+<a name="111"><span class="lineNum">     111 </span><span class="lineCov">          4 :                   'shortName': item.shortName,</span></a>
+<a name="112"><span class="lineNum">     112 </span><span class="lineCov">          4 :                   'name': item.name,</span></a>
+<a name="113"><span class="lineNum">     113 </span><span class="lineCov">          4 :                   'selected': item.selected ? 1 : 0,</span></a>
+<a name="114"><span class="lineNum">     114 </span><span class="lineCov">          4 :                   'captured': item.captured ? 1 : 0</span></a>
 <a name="115"><span class="lineNum">     115 </span>            :                 },</a>
 <a name="116"><span class="lineNum">     116 </span>            :             changeListener),</a>
-<a name="117"><span class="lineNum">     117 </span><span class="lineCov">          4 :         _pokemonUpdateAdapter = UpdateAdapter(</span></a>
+<a name="117"><span class="lineNum">     117 </span><span class="lineCov">          5 :         _pokemonUpdateAdapter = UpdateAdapter(</span></a>
 <a name="118"><span class="lineNum">     118 </span>            :             database,</a>
 <a name="119"><span class="lineNum">     119 </span>            :             'Pokemon',</a>
-<a name="120"><span class="lineNum">     120 </span><span class="lineCov">          4 :             ['shortName'],</span></a>
+<a name="120"><span class="lineNum">     120 </span><span class="lineCov">          5 :             ['shortName'],</span></a>
 <a name="121"><span class="lineNum">     121 </span><span class="lineCov">          4 :             (Pokemon item) =&gt; &lt;String, Object?&gt;{</span></a>
 <a name="122"><span class="lineNum">     122 </span><span class="lineCov">          2 :                   'shortName': item.shortName,</span></a>
 <a name="123"><span class="lineNum">     123 </span><span class="lineCov">          2 :                   'name': item.name,</span></a>
@@ -198,9 +198,9 @@
 <a name="136"><span class="lineNum">     136 </span>            : </a>
 <a name="137"><span class="lineNum">     137 </span>            :   final UpdateAdapter&lt;Pokemon&gt; _pokemonUpdateAdapter;</a>
 <a name="138"><span class="lineNum">     138 </span>            : </a>
-<a name="139"><span class="lineNum">     139 </span><span class="lineCov">          4 :   @override</span></a>
+<a name="139"><span class="lineNum">     139 </span><span class="lineCov">          5 :   @override</span></a>
 <a name="140"><span class="lineNum">     140 </span>            :   Future&lt;List&lt;Pokemon&gt;&gt; getAllPokemons() async {</a>
-<a name="141"><span class="lineNum">     141 </span><span class="lineCov">          8 :     return _queryAdapter.queryList('SELECT * FROM Pokemon',</span></a>
+<a name="141"><span class="lineNum">     141 </span><span class="lineCov">         10 :     return _queryAdapter.queryList('SELECT * FROM Pokemon',</span></a>
 <a name="142"><span class="lineNum">     142 </span><span class="lineCov">          6 :         mapper: (Map&lt;String, Object?&gt; row) =&gt; Pokemon(</span></a>
 <a name="143"><span class="lineNum">     143 </span><span class="lineCov">          3 :             row['shortName'] as String,</span></a>
 <a name="144"><span class="lineNum">     144 </span><span class="lineCov">          3 :             row['name'] as String,</span></a>
@@ -218,14 +218,14 @@
 <a name="156"><span class="lineNum">     156 </span><span class="lineCov">          2 :             (row['captured'] as int) != 0));</span></a>
 <a name="157"><span class="lineNum">     157 </span>            :   }</a>
 <a name="158"><span class="lineNum">     158 </span>            : </a>
-<a name="159"><span class="lineNum">     159 </span><span class="lineCov">          3 :   @override</span></a>
+<a name="159"><span class="lineNum">     159 </span><span class="lineCov">          4 :   @override</span></a>
 <a name="160"><span class="lineNum">     160 </span>            :   Stream&lt;List&lt;Pokemon&gt;&gt; watchAllPokemons() {</a>
-<a name="161"><span class="lineNum">     161 </span><span class="lineCov">          6 :     return _queryAdapter.queryListStream('SELECT * FROM Pokemon',</span></a>
-<a name="162"><span class="lineNum">     162 </span><span class="lineCov">          6 :         mapper: (Map&lt;String, Object?&gt; row) =&gt; Pokemon(</span></a>
-<a name="163"><span class="lineNum">     163 </span><span class="lineCov">          3 :             row['shortName'] as String,</span></a>
-<a name="164"><span class="lineNum">     164 </span><span class="lineCov">          3 :             row['name'] as String,</span></a>
-<a name="165"><span class="lineNum">     165 </span><span class="lineCov">          6 :             (row['selected'] as int) != 0,</span></a>
-<a name="166"><span class="lineNum">     166 </span><span class="lineCov">          6 :             (row['captured'] as int) != 0),</span></a>
+<a name="161"><span class="lineNum">     161 </span><span class="lineCov">          8 :     return _queryAdapter.queryListStream('SELECT * FROM Pokemon',</span></a>
+<a name="162"><span class="lineNum">     162 </span><span class="lineCov">          8 :         mapper: (Map&lt;String, Object?&gt; row) =&gt; Pokemon(</span></a>
+<a name="163"><span class="lineNum">     163 </span><span class="lineCov">          4 :             row['shortName'] as String,</span></a>
+<a name="164"><span class="lineNum">     164 </span><span class="lineCov">          4 :             row['name'] as String,</span></a>
+<a name="165"><span class="lineNum">     165 </span><span class="lineCov">          8 :             (row['selected'] as int) != 0,</span></a>
+<a name="166"><span class="lineNum">     166 </span><span class="lineCov">          8 :             (row['captured'] as int) != 0),</span></a>
 <a name="167"><span class="lineNum">     167 </span>            :         queryableName: 'Pokemon',</a>
 <a name="168"><span class="lineNum">     168 </span>            :         isView: false);</a>
 <a name="169"><span class="lineNum">     169 </span>            :   }</a>
@@ -241,19 +241,19 @@
 <a name="179"><span class="lineNum">     179 </span><span class="lineCov">          1 :         arguments: [shortName]);</span></a>
 <a name="180"><span class="lineNum">     180 </span>            :   }</a>
 <a name="181"><span class="lineNum">     181 </span>            : </a>
-<a name="182"><span class="lineNum">     182 </span><span class="lineCov">          2 :   @override</span></a>
+<a name="182"><span class="lineNum">     182 </span><span class="lineCov">          3 :   @override</span></a>
 <a name="183"><span class="lineNum">     183 </span>            :   Future&lt;Pokemon?&gt; getSelectedPokemon() async {</a>
-<a name="184"><span class="lineNum">     184 </span><span class="lineCov">          4 :     return _queryAdapter.query('SELECT * FROM Pokemon WHERE selected',</span></a>
-<a name="185"><span class="lineNum">     185 </span><span class="lineCov">          2 :         mapper: (Map&lt;String, Object?&gt; row) =&gt; Pokemon(</span></a>
-<a name="186"><span class="lineNum">     186 </span><span class="lineCov">          1 :             row['shortName'] as String,</span></a>
-<a name="187"><span class="lineNum">     187 </span><span class="lineCov">          1 :             row['name'] as String,</span></a>
-<a name="188"><span class="lineNum">     188 </span><span class="lineCov">          2 :             (row['selected'] as int) != 0,</span></a>
-<a name="189"><span class="lineNum">     189 </span><span class="lineCov">          2 :             (row['captured'] as int) != 0));</span></a>
+<a name="184"><span class="lineNum">     184 </span><span class="lineCov">          6 :     return _queryAdapter.query('SELECT * FROM Pokemon WHERE selected',</span></a>
+<a name="185"><span class="lineNum">     185 </span><span class="lineCov">          4 :         mapper: (Map&lt;String, Object?&gt; row) =&gt; Pokemon(</span></a>
+<a name="186"><span class="lineNum">     186 </span><span class="lineCov">          2 :             row['shortName'] as String,</span></a>
+<a name="187"><span class="lineNum">     187 </span><span class="lineCov">          2 :             row['name'] as String,</span></a>
+<a name="188"><span class="lineNum">     188 </span><span class="lineCov">          4 :             (row['selected'] as int) != 0,</span></a>
+<a name="189"><span class="lineNum">     189 </span><span class="lineCov">          4 :             (row['captured'] as int) != 0));</span></a>
 <a name="190"><span class="lineNum">     190 </span>            :   }</a>
 <a name="191"><span class="lineNum">     191 </span>            : </a>
-<a name="192"><span class="lineNum">     192 </span><span class="lineCov">          3 :   @override</span></a>
+<a name="192"><span class="lineNum">     192 </span><span class="lineCov">          4 :   @override</span></a>
 <a name="193"><span class="lineNum">     193 </span>            :   Future&lt;void&gt; insertPokemon(Pokemon pokemon) async {</a>
-<a name="194"><span class="lineNum">     194 </span><span class="lineCov">          6 :     await _pokemonInsertionAdapter.insert(pokemon, OnConflictStrategy.abort);</span></a>
+<a name="194"><span class="lineNum">     194 </span><span class="lineCov">          8 :     await _pokemonInsertionAdapter.insert(pokemon, OnConflictStrategy.abort);</span></a>
 <a name="195"><span class="lineNum">     195 </span>            :   }</a>
 <a name="196"><span class="lineNum">     196 </span>            : </a>
 <a name="197"><span class="lineNum">     197 </span><span class="lineCov">          2 :   @override</span></a>
