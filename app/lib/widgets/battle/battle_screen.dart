@@ -1,7 +1,9 @@
 import 'package:app/view_models/battle_view_model.dart';
+import 'package:app/widgets/battle/battle_post_fight.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import '../../view_models/pokedex_view_model.dart';
 import 'battle_actions.dart';
 import 'battle_bar_info.dart';
 import 'battle_sprites.dart';
@@ -12,9 +14,18 @@ class BattleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final battleViewModel = context.watch<BattleViewModel>();
+    final pokedexViewModel = context.watch<PokedexViewModel>();
+
+    renderGameOver() async {
+      await Future.delayed(const Duration(seconds: 3));
+      if (context.mounted) {
+        showPostFight(context, context.pop, battleViewModel.opponentInfo,
+            pokedexViewModel);
+      }
+    }
 
     if (battleViewModel.gameOver) {
-      Future.delayed(const Duration(seconds: 2));
+      renderGameOver();
     }
 
     return Container(
