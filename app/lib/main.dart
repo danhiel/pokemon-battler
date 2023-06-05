@@ -1,5 +1,6 @@
 import 'package:app/database/database.dart';
 import 'package:app/database/database_loader.dart';
+import 'package:app/view_models/geolocation_view_model.dart';
 import 'package:app/widgets/app.dart';
 import 'package:app/widgets/battle/battle.dart';
 import 'package:app/widgets/home/home.dart';
@@ -24,12 +25,14 @@ final router = GoRouter(
         builder: (context, _) => const PickStarterPokemon()),
     GoRoute(path: '/home', name: 'home', builder: (context, _) => const Home()),
     GoRoute(
-        path: '/pokemon',
-        name: 'pokemonDetails',
-        builder: (BuildContext context, GoRouterState state) {
-          final name = state.queryParameters['name']!;
-          return PokemonDetailsScreen(name: name,);
-        },
+      path: '/pokemon',
+      name: 'pokemonDetails',
+      builder: (BuildContext context, GoRouterState state) {
+        final name = state.queryParameters['name']!;
+        return PokemonDetailsScreen(
+          name: name,
+        );
+      },
     ),
     GoRoute(
         path: '/battle',
@@ -51,8 +54,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: ChangeNotifierProvider(
-            create: (context) => PokedexViewModel(database),
+        home: MultiProvider(
+            providers: [
+          ChangeNotifierProvider(
+              create: (context) => PokedexViewModel(database)),
+          ChangeNotifierProvider(create: (context) => GeolocationViewModel())
+        ],
             child: MaterialApp.router(
               title: 'Pokemon Battler',
               debugShowCheckedModeBanner: false,
