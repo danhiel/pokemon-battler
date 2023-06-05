@@ -57,7 +57,8 @@ class PokemonDetailInfoScreen extends StatelessWidget {
                             },
                       child: const Text('Select Pokemon')),
                   ElevatedButton(
-                    onPressed: !captured
+                    onPressed: !captured ||
+                            pokedexViewModel.allCapturedPokemons.length <= 1
                         ? null
                         : () async {
                             await pokedexViewModel.setCapturedPokemon(

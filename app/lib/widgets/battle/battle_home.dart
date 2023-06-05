@@ -1,3 +1,4 @@
+import 'package:app/view_models/geolocation_view_model.dart';
 import 'package:app/view_models/pokedex_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -18,6 +19,7 @@ class _StartBattleState extends State<StartBattle> {
   @override
   Widget build(BuildContext context) {
     final pokedexViewModel = context.watch<PokedexViewModel>();
+    final geolocation = context.watch<GeolocationViewModel>();
     var selectedPokemon = pokedexViewModel.selectedPokemon!;
 
     return Container(
@@ -46,16 +48,35 @@ class _StartBattleState extends State<StartBattle> {
                   ),
                 ],
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              child: Column(
                 children: [
-                  ElevatedButton(
-                      onPressed: () => handleClickBattle(),
-                      child: const Text('Battle')),
-                  ElevatedButton(
-                      onPressed: () =>
-                          handleClickViewDetails(selectedPokemon.shortName),
-                      child: Text('View ${selectedPokemon.name} Details')),
+                  Text(
+                    'Battle in: ${geolocation.distance}/150 M',
+                    style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                  const Divider(
+                    height: 12,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                          onPressed: geolocation.distance / 150 < 1
+                              ? null
+                              : () {
+                                  geolocation.resetDistance();
+                                  handleClickBattle();
+                                },
+                          child: const Text('Battle')),
+                      ElevatedButton(
+                          onPressed: () =>
+                              handleClickViewDetails(selectedPokemon.shortName),
+                          child: Text('View ${selectedPokemon.name} Details')),
+                    ],
+                  ),
                 ],
               ),
             )),
