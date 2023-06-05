@@ -6,8 +6,10 @@ import 'battle_decoration.dart';
 
 class BattleBarInfo extends StatelessWidget {
   final PokemonDetails pokemonDetails;
+  final bool captured;
 
-  const BattleBarInfo({super.key, required this.pokemonDetails});
+  const BattleBarInfo(
+      {super.key, required this.pokemonDetails, required this.captured});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,9 @@ class BattleBarInfo extends StatelessWidget {
                     fontSize: 16,
                     color: Colors.black,
                     decoration: TextDecoration.none),
+              ),
+              const Divider(
+                indent: 6,
               ),
               Image(
                 image: AssetImage(pokemonDetails.typeIcon),
@@ -67,12 +72,28 @@ class BattleBarInfo extends StatelessWidget {
           const SizedBox(
             height: 4,
           ),
-          Text(
-            '${pokemonDetails.currentHp} / ${pokemonDetails.hp}',
-            style: const TextStyle(
-                fontSize: 12,
-                color: Colors.black,
-                decoration: TextDecoration.none),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '${pokemonDetails.currentHp} / ${pokemonDetails.hp}',
+                style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.black,
+                    decoration: TextDecoration.none),
+              ),
+              if (captured) ...[
+                const Divider(
+                  indent: 6,
+                  height: 6,
+                ),
+                const Image(
+                  image: AssetImage('assets/icons/favicon.ico'),
+                  height: 12,
+                  width: 12,
+                )
+              ],
+            ],
           )
         ]));
   }

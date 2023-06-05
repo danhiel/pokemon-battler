@@ -62,7 +62,7 @@ class BattleViewModel extends ChangeNotifier {
     notifyListeners();
 
     await Future.delayed(const Duration(seconds: 2));
-    if (_battleInfo.results!.p2Result == null) {
+    if (results.p2Result == null) {
       _dialogue = '${_p2.name} fainted.';
     }
   }
@@ -92,7 +92,7 @@ class BattleViewModel extends ChangeNotifier {
     notifyListeners();
 
     await Future.delayed(const Duration(seconds: 2));
-    if (_battleInfo.results!.p1Result == null) {
+    if (results.p1Result == null) {
       _dialogue = '${_p1.name} fainted.';
     }
   }

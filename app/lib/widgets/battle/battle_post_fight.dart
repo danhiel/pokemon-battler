@@ -2,12 +2,13 @@ import 'package:app/models/pokemon_details_model.dart';
 import 'package:app/view_models/pokedex_view_model.dart';
 import 'package:flutter/material.dart';
 
-Future<void> showPostFight(BuildContext context, Function goHome,
-    PokemonDetails opponentInfo, PokedexViewModel pokedexViewModel) async {
+Future<void> showPostFight(
+    BuildContext context,
+    Function goHome,
+    PokemonDetails opponentInfo,
+    PokedexViewModel pokedexViewModel,
+    bool captured) async {
   final userWon = opponentInfo.currentHp! <= 0;
-  final captured =
-      (pokedexViewModel.getPokemonByShortName(opponentInfo.shortName))!
-          .captured;
 
   return showDialog<void>(
     context: context,
@@ -34,7 +35,7 @@ Future<void> showPostFight(BuildContext context, Function goHome,
                           goHome();
                         }
                       },
-                child: Text(captured ? 'Already captured' : 'Capture it!')),
+                child: Text(captured ? 'Captured' : 'Capture it!')),
           TextButton(
             child: const Text('Return to home'),
             onPressed: () {

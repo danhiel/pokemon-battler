@@ -8,24 +8,39 @@ import 'battle_actions.dart';
 import 'battle_bar_info.dart';
 import 'battle_sprites.dart';
 
-class BattleScreen extends StatelessWidget {
+class BattleScreen extends StatefulWidget {
   const BattleScreen({super.key});
+
+  @override
+  State<BattleScreen> createState() => BattleScreenState();
+}
+
+class BattleScreenState extends State<BattleScreen> {
+  bool postFightMounted = false;
 
   @override
   Widget build(BuildContext context) {
     final battleViewModel = context.watch<BattleViewModel>();
     final pokedexViewModel = context.watch<PokedexViewModel>();
+    final captured = (pokedexViewModel
+            .getPokemonByShortName(battleViewModel.opponentInfo.shortName))!
+        .captured;
 
     renderGameOver() async {
       await Future.delayed(const Duration(seconds: 3));
       if (context.mounted) {
         showPostFight(context, context.pop, battleViewModel.opponentInfo,
-            pokedexViewModel);
+            pokedexViewModel, captured);
       }
     }
 
     if (battleViewModel.gameOver) {
-      renderGameOver();
+      if (!postFightMounted) {
+        setState(() {
+          postFightMounted = true;
+        });
+        renderGameOver();
+      }
     }
 
     return Container(
@@ -57,12 +72,16 @@ class BattleScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: BattleBarInfo(
-                            pokemonDetails: battleViewModel.opponentInfo),
+                          pokemonDetails: battleViewModel.opponentInfo,
+                          captured: captured,
+                        ),
                       ),
                       Align(
                         alignment: Alignment.topRight,
                         child: BattleBarInfo(
-                            pokemonDetails: battleViewModel.userInfo),
+                          pokemonDetails: battleViewModel.userInfo,
+                          captured: false,
+                        ),
                       )
                     ],
                   )),
