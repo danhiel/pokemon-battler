@@ -1,5 +1,6 @@
 import 'package:app/models/pokemon_details_model.dart';
 import 'package:app/models/pokemon_move_model.dart';
+import 'package:app/view_models/pokedex_view_model.dart';
 import 'package:app/widgets/pokemon_details/pokemon_detail_moves.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:app/services/pokemon_service.dart';

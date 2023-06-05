@@ -1,10 +1,19 @@
+import 'package:app/database/database.dart';
+import 'package:app/database/pokemon_entity.dart';
+import 'package:app/models/pokemon_details_model.dart';
+import 'package:app/view_models/battle_view_model.dart';
+import 'package:app/view_models/pokedex_view_model.dart';
+import 'package:app/widgets/battle/battle_bar_info.dart';
 import 'package:app/widgets/battle/battle_dialogue.dart';
 import 'package:app/widgets/battle/battle_move.dart';
+import 'package:app/widgets/battle/battle_screen.dart';
+import 'package:app/widgets/battle/battle_sprites.dart';
 import 'package:app/widgets/common/loading_pikachu.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:app/models/pokemon_move_model.dart';
 import 'package:app/widgets/battle/battle_actions.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   group('BattleActions', () {
@@ -99,6 +108,45 @@ void main() {
 
       expect(tester.widget<TextButton>(find.widgetWithText(TextButton, 'Fight')).onPressed, null);
       expect(tester.widget<TextButton>(find.widgetWithText(TextButton, 'Flee')).onPressed, null);
+    });
+  });
+  group('BattleBarInof', () {
+    final moves = [
+      Move(name: 'Bite', type: 'dark', dp: 60),
+      Move(name: 'Tackle', type: 'normal', dp: 60),
+      Move(name: 'Water Gun', type: 'water', dp: 40),
+      Move(name: 'Withdraw', type: 'water', dp: 0),
+    ];
+
+    testWidgets('BattleBarInfo rendering of Pokemon name and type icon', (WidgetTester tester) async {
+      // Create a mock PokemonDetails object with sample data
+      PokemonDetails pokemonDetails = PokemonDetails(
+          id: 1,
+          name: 'Squirtle',
+          shortName: 'squirtle',
+          hp: 198,
+          type: "normal",
+          weakness: "grass",
+          description: "description",
+          photo: "squirtle",
+          sprite: "squirtle",
+          typeIcon: "water",
+          weaknessIcon: "grass",
+          moves: moves
+      );
+
+      // Initialize your widget with mocked values
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: BattleBarInfo(pokemonDetails: pokemonDetails, captured: false),
+          ),
+        ),
+      );
+
+      // Verify the rendering of the Pokemon's name and type icon
+      expect(find.text('Squirtle'), findsOneWidget);
+      expect(find.image(const AssetImage('assets/icons/water.png')), findsOneWidget);
     });
   });
 }

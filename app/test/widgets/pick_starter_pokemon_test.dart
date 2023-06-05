@@ -1,20 +1,16 @@
 import 'package:app/database/database.dart';
-import 'package:app/database/pokemon_dao.dart';
 import 'package:app/database/pokemon_entity.dart';
 import 'package:app/view_models/pokedex_view_model.dart';
-import 'package:app/widgets/home/home.dart';
 import 'package:app/widgets/pokemon_starter/pokemon_card.dart';
 import 'package:app/widgets/pokemon_starter/pick_starter_pokemon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   group('PickStarterPokemon', () {
     late PokedexDatabase database;
     late PokedexViewModel viewModel;
-    late GoRouter router;
 
     setUpAll(() async {
       database = await $FloorPokedexDatabase.inMemoryDatabaseBuilder().build();
@@ -27,13 +23,6 @@ void main() {
           .insertPokemon(Pokemon('bulbasaur', 'Bulbasaur', false, true));
       await viewModel
           .insertPokemon(Pokemon('squirtle', 'Squirtle', false, false));
-
-      router = GoRouter(
-          initialLocation: '/events',
-          routes: [
-            GoRoute(path: '/home', name: 'home', builder: (context, _) => const Home()),
-          ]
-      );
     });
 
     tearDownAll(() async {
