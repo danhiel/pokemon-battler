@@ -8,9 +8,9 @@ Pokémon Battler is a mobile-app phone game that enables users to play and simul
 
 # Technologies
 
-Created with Flutter, Dart.
-Uses [UW's Pokedex API](https://courses.cs.washington.edu/courses/cse154/webservices/pokedex/)
-Uses MVVM Architecture.
+- Created with Flutter, Dart.
+- Uses [UW's Pokedex API](https://courses.cs.washington.edu/courses/cse154/webservices/pokedex/).
+- Uses MVVM Architecture.
 
 # Getting Started
 
