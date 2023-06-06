@@ -81,5 +81,14 @@ void main() {
       // then
       expect(actual.captured, false);
     });
+
+    test('should reset pokedex.', () async {
+      // when
+      await viewModel.reset();
+      var actual = viewModel.allCapturedPokemons;
+
+      // then
+      expect(actual.length, 0);
+    });
   });
 }

@@ -1,7 +1,5 @@
-import 'package:app/view_models/pokedex_view_model.dart';
 import 'package:app/widgets/pokedex/captured_pokedex_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'all_pokedex_list.dart';
 

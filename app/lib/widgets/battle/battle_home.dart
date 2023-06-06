@@ -23,6 +23,7 @@ class _StartBattleState extends State<StartBattle> {
     var selectedPokemon = pokedexViewModel.selectedPokemon!;
 
     return Container(
+        height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -30,7 +31,8 @@ class _StartBattleState extends State<StartBattle> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
+        child: SingleChildScrollView(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SafeArea(
@@ -84,6 +86,6 @@ class _StartBattleState extends State<StartBattle> {
             Image.asset('assets/sprites/${selectedPokemon.shortName}.png',
                 fit: BoxFit.cover, height: 200),
           ],
-        ));
+        )));
   }
 }

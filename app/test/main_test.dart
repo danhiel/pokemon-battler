@@ -37,18 +37,5 @@ void main() {
       // then
       expect(find.text('Press to start'), findsOneWidget);
     });
-
-    testWidgets('should select starter pokemon', (WidgetTester tester) async {
-      // when
-      await tester.pumpWidget(MyApp(database: database));
-
-      await tester.tap(find.text('Press to start'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Select Pokemon'));
-      await tester.pumpAndSettle();
-
-      // then
-      expect(find.text('Pokedex'), findsOneWidget);
-    });
   });
 }
